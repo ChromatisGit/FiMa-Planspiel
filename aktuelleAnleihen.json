@@ -1,0 +1,887 @@
+[
+  {
+    "name": "Sanofi S.A.",
+    "id": "FR0000047656",
+    "link": "https://www.finanzen.net/anleihen/a0tje0-sanofi-anleihe"
+  },
+  {
+    "name": "William John (HV) PLC",
+    "id": "GB00BP6MJB84",
+    "link": "https://www.finanzen.net/anleihen/a3k8tz-william-john-hv-anleihe"
+  },
+  {
+    "name": "Ziton A/S",
+    "id": "NO0012928185",
+    "link": "https://www.finanzen.net/anleihen/a3lje8-ziton-a-s-anleihe"
+  },
+  {
+    "name": "LifeFit Group MidCo GmbH",
+    "id": "NO0010856966",
+    "link": "https://www.finanzen.net/anleihen/a2ynra-lifefit-group-midco-anleihe"
+  },
+  {
+    "name": "Permanent TSB Group Holdings PLC",
+    "id": "XS2538798583",
+    "link": "https://www.finanzen.net/anleihen/a3larp-permanent-tsb-group-holdings-anleihe"
+  },
+  {
+    "name": "Eleving Group",
+    "id": "DE000A3LL7M4",
+    "link": "https://www.finanzen.net/anleihen/a3ll7m-eleving-group-anleihe"
+  },
+  {
+    "name": "Multitude SE",
+    "id": "NO0011037327",
+    "link": "https://www.finanzen.net/anleihen/a3ktc6-multitude-se-anleihe"
+  },
+  {
+    "name": "CSM Securities S.à r.l. acting in Respect of Fiduciary Estate 1",
+    "id": "XS2213948529",
+    "link": "https://www.finanzen.net/anleihen/a2800k-csm-securities-sa-rl-acting-in-respect-of-fiduciary-estate-1-anleihe"
+  },
+  {
+    "name": "Calligo (UK) Ltd.",
+    "id": "NO0011179806",
+    "link": "https://www.finanzen.net/anleihen/a3k0j3-calligo-uk-anleihe"
+  },
+  {
+    "name": "Mutares SE & Co. KGaA",
+    "id": "NO0012530965",
+    "link": "https://www.finanzen.net/anleihen/a30v9t-mutares-se-kgaa-anleihe"
+  },
+  {
+    "name": "Secop Group Holding GmbH",
+    "id": "NO0012923194",
+    "link": "https://www.finanzen.net/anleihen/a351sk-secop-group-holding-anleihe"
+  },
+  {
+    "name": "PARQ energy GmbH",
+    "id": "DE000A3510D6",
+    "link": "https://www.finanzen.net/anleihen/a3510d-parq-energy-anleihe"
+  },
+  {
+    "name": "Pardus Capital Holdings PLC",
+    "id": "GB00BMVB6072",
+    "link": "https://www.finanzen.net/anleihen/a28y6c-pardus-capital-holdings-anleihe"
+  },
+  {
+    "name": "Schletter International B.V.",
+    "id": "NO0012530981",
+    "link": "https://www.finanzen.net/anleihen/a3k86d-schletter-international-bv-anleihe"
+  },
+  {
+    "name": "Preem Holdings AB",
+    "id": "XS2493887264",
+    "link": "https://www.finanzen.net/anleihen/a3k6y5-preem-holdings-ab-anleihe"
+  },
+  {
+    "name": "Alpha Services and Holdings S.A.",
+    "id": "XS2583633966",
+    "link": "https://www.finanzen.net/anleihen/a3ldxb-alpha-services-and-holdings-anleihe"
+  },
+  {
+    "name": "Bank of Cyprus Holdings PLC",
+    "id": "XS2638438510",
+    "link": "https://www.finanzen.net/anleihen/a3lj8q-bank-of-cyprus-holdings-anleihe"
+  },
+  {
+    "name": "BDT Media Automation GmbH",
+    "id": "DE000A351YN0",
+    "link": "https://www.finanzen.net/anleihen/a351yn-bdt-media-automation-anleihe"
+  },
+  {
+    "name": "SGL International A/S",
+    "id": "NO0012441007",
+    "link": "https://www.finanzen.net/anleihen/a3k3d0-sgl-international-a-s-anleihe"
+  },
+  {
+    "name": "LR Health & Beauty SE",
+    "id": "NO0013149658",
+    "link": "https://www.finanzen.net/anleihen/a3513a-lr-health-beauty-se-anleihe"
+  },
+  {
+    "name": "Amber Beverage Group Holding S.à r.l",
+    "id": "LV0000870137",
+    "link": "https://www.finanzen.net/anleihen/a3le0t-amber-beverage-group-holding-sa-rl-anleihe"
+  },
+  {
+    "name": "PHM Group Holding Oy",
+    "id": "FI4000541685",
+    "link": "https://www.finanzen.net/anleihen/a3lb6c-phm-group-holding-oy-anleihe"
+  },
+  {
+    "name": "Multitude SE",
+    "id": "NO0012702549",
+    "link": "https://www.finanzen.net/anleihen/a3lbt7-multitude-se-anleihe"
+  },
+  {
+    "name": "De Volksbank N.V.",
+    "id": "XS0468954523",
+    "link": "https://www.finanzen.net/anleihen/a1aqe5-de-volksbank-anleihe"
+  },
+  {
+    "name": "4Finance S.A.",
+    "id": "XS1417876163",
+    "link": "https://www.finanzen.net/anleihen/a181zp-4finance-anleihe"
+  },
+  {
+    "name": "LR Global Holding GmbH",
+    "id": "NO0010894850",
+    "link": "https://www.finanzen.net/anleihen/a3h3fm-lr-global-holding-anleihe"
+  },
+  {
+    "name": "Gaming Innovation Group PLC",
+    "id": "NO0013024018",
+    "link": "https://www.finanzen.net/anleihen/a3lq87-gaming-innovation-group-anleihe"
+  },
+  {
+    "name": "Idavang A.S.",
+    "id": "DK0030472618",
+    "link": "https://www.finanzen.net/anleihen/a284ns-idavang-as-anleihe"
+  },
+  {
+    "name": "Codere Finance 2 (Luxembourg) S.A.",
+    "id": "XS2209052419",
+    "link": "https://www.finanzen.net/anleihen/a282q6-codere-finance-2-luxembourg-anleihe"
+  },
+  {
+    "name": "IuteCredit Finance S.à.r.l.",
+    "id": "XS2378483494",
+    "link": "https://www.finanzen.net/anleihen/a3kt6m-iutecredit-finance-sarl-anleihe"
+  },
+  {
+    "name": "PlusPlus Capital Financial S.à r.l.",
+    "id": "XS2502401552",
+    "link": "https://www.finanzen.net/anleihen/a3k7ud-plusplus-capital-financial-sa-rl-anleihe"
+  },
+  {
+    "name": "EG Global Finance PLC",
+    "id": "XS2719998952",
+    "link": "https://www.finanzen.net/anleihen/a3lq7v-eg-global-finance-anleihe"
+  },
+  {
+    "name": "Solocal Group",
+    "id": "FR0013237484",
+    "link": "https://www.finanzen.net/anleihen/a19e25-solocal-group-anleihe"
+  },
+  {
+    "name": "B2 Impact ASA",
+    "id": "NO0012704107",
+    "link": "https://www.finanzen.net/anleihen/a3k9us-b2-impact-asa-anleihe"
+  },
+  {
+    "name": "Fiven AS",
+    "id": "SE0016075196",
+    "link": "https://www.finanzen.net/anleihen/a3ksr9-fiven-as-anleihe"
+  },
+  {
+    "name": "European Energy A.S.",
+    "id": "DK0030521927",
+    "link": "https://www.finanzen.net/anleihen/a3ldf8-european-energy-as-anleihe"
+  },
+  {
+    "name": "Advanzia Bank S.A.",
+    "id": "NO0013162743",
+    "link": "https://www.finanzen.net/anleihen/a3luu9-advanzia-bank-anleihe"
+  },
+  {
+    "name": "Schletter International B.V.",
+    "id": "NO0012530973",
+    "link": "https://www.finanzen.net/anleihen/a3k86f-schletter-international-bv-anleihe"
+  },
+  {
+    "name": "Azerion Group N.V.",
+    "id": "NO0013017657",
+    "link": "https://www.finanzen.net/anleihen/a3lnlx-azerion-group-anleihe"
+  },
+  {
+    "name": "Eroski Sociedad Cooperativa",
+    "id": "XS2711320775",
+    "link": "https://www.finanzen.net/anleihen/a3lrlf-eroski-sociedad-cooperativa-anleihe"
+  },
+  {
+    "name": "Eroski Sociedad Cooperativa",
+    "id": "XS2711321070",
+    "link": "https://www.finanzen.net/anleihen/a3lswz-eroski-sociedad-cooperativa-anleihe"
+  },
+  {
+    "name": "iQera Group SAS",
+    "id": "XS2580885908",
+    "link": "https://www.finanzen.net/anleihen/a3ldpn-iqera-group-sas-anleihe"
+  },
+  {
+    "name": "Gröner Group AG",
+    "id": "DE000A3E5TZ3",
+    "link": "https://www.finanzen.net/anleihen/a3e5tz-groener-group-anleihe"
+  },
+  {
+    "name": "Hertha BSC GmbH & Co. KGaA",
+    "id": "SE0011337054",
+    "link": "https://www.finanzen.net/anleihen/a2nbk3-hertha-bscaa-anleihe"
+  },
+  {
+    "name": "Banca Monte dei Paschi di Siena S.p.A.",
+    "id": "XS2031926731",
+    "link": "https://www.finanzen.net/anleihen/a2r5jw-banca-monte-dei-paschi-di-siena-spa-anleihe"
+  },
+  {
+    "name": "ams-OSRAM AG",
+    "id": "XS2724532333",
+    "link": "https://www.finanzen.net/anleihen/a3lrmp-ams-osram-anleihe"
+  },
+  {
+    "name": "ams-OSRAM AG",
+    "id": "XS2724532416",
+    "link": "https://www.finanzen.net/anleihen/a3lrmq-ams-osram-anleihe"
+  },
+  {
+    "name": "Solis Bond Company DAC",
+    "id": "NO0010914914",
+    "link": "https://www.finanzen.net/anleihen/a286xm-solis-bond-company-dac-anleihe"
+  },
+  {
+    "name": "Cirsa Finance International S.à.r.l.",
+    "id": "XS2550380104",
+    "link": "https://www.finanzen.net/anleihen/a3lazt-cirsa-finance-international-sarl-anleihe"
+  },
+  {
+    "name": "R-Logitech S.A.M.",
+    "id": "DE000A19WVN8",
+    "link": "https://www.finanzen.net/anleihen/a19wvn-r-logitechm-anleihe"
+  },
+  {
+    "name": "R-Logitech S.A.M.",
+    "id": "DE000A3LJCA6",
+    "link": "https://www.finanzen.net/anleihen/a3ljca-r-logitechm-anleihe"
+  },
+  {
+    "name": "Hellenic Bank Public Company Ltd",
+    "id": "XS2597995112",
+    "link": "https://www.finanzen.net/anleihen/a3lff9-hellenic-bank-public-company-ltd-anleihe"
+  },
+  {
+    "name": "Green Bidco S.A.",
+    "id": "XS2647351142",
+    "link": "https://www.finanzen.net/anleihen/a3lk3a-green-bidco-anleihe"
+  },
+  {
+    "name": "immigon portfolioabbau ag",
+    "id": "XS0359924643",
+    "link": "https://www.finanzen.net/anleihen/a0tuqg-immigon-portfolioabbau-ag-anleihe"
+  },
+  {
+    "name": "momox Holding AG",
+    "id": "NO0010886369",
+    "link": "https://www.finanzen.net/anleihen/a289qc-momox-holding-anleihe"
+  },
+  {
+    "name": "Garfunkelux Holdco 3 S.A.",
+    "id": "XS2250154494",
+    "link": "https://www.finanzen.net/anleihen/a284k6-garfunkelux-holdco-3-anleihe"
+  },
+  {
+    "name": "EPH Group AG",
+    "id": "DE000A3LJCB4",
+    "link": "https://www.finanzen.net/anleihen/a3ljcb-eph-group-anleihe"
+  },
+  {
+    "name": "Dover Harcourt PLC",
+    "id": "GB00BM94NS57",
+    "link": "https://www.finanzen.net/anleihen/a28y6n-dover-harcourt-anleihe"
+  },
+  {
+    "name": "Bank of Valletta PLC",
+    "id": "XS2539425095",
+    "link": "https://www.finanzen.net/anleihen/a3lbzg-bank-of-valletta-anleihe"
+  },
+  {
+    "name": "Eurobank Ergasias Services and Holdings S.A.",
+    "id": "XS2562543442",
+    "link": "https://www.finanzen.net/anleihen/a3lb2u-eurobank-ergasias-services-and-holdings-anleihe"
+  },
+  {
+    "name": "Summer BidCo B.V.",
+    "id": "XS2758100296",
+    "link": "https://www.finanzen.net/anleihen/a3lt4g-summer-bidco-bv-anleihe"
+  },
+  {
+    "name": "Société Générale S.A.",
+    "id": "DE000SW0ACN0",
+    "link": "https://www.finanzen.net/anleihen/sw0acn-societe-generale-anleihe"
+  },
+  {
+    "name": "PrestigeBidCo GmbH",
+    "id": "XS2499278724",
+    "link": "https://www.finanzen.net/anleihen/a30vmc-prestigebidco-anleihe"
+  },
+  {
+    "name": "Global Agrajes S.L.",
+    "id": "NO0010912801",
+    "link": "https://www.finanzen.net/anleihen/a286nv-global-agrajes-sl-anleihe"
+  },
+  {
+    "name": "Bank Millennium S.A.",
+    "id": "XS2684974046",
+    "link": "https://www.finanzen.net/anleihen/a3lnff-bank-millennium-anleihe"
+  },
+  {
+    "name": "Piraeus Financial Holdings S.A.",
+    "id": "XS2018638648",
+    "link": "https://www.finanzen.net/anleihen/a2r378-piraeus-financial-holdings-anleihe"
+  },
+  {
+    "name": "Stonegate Pub Company Financing 2019 PLC",
+    "id": "XS2210013970",
+    "link": "https://www.finanzen.net/anleihen/a280pq-stonegate-pub-company-financing-2019-anleihe"
+  },
+  {
+    "name": "HSE Finance S.a r.l",
+    "id": "XS2337308741",
+    "link": "https://www.finanzen.net/anleihen/a3kqfw-hse-finance-sa-rl-anleihe"
+  },
+  {
+    "name": "Olympus Water US Holding Corp.",
+    "id": "XS2628988730",
+    "link": "https://www.finanzen.net/anleihen/a3ljem-olympus-water-us-holding-anleihe"
+  },
+  {
+    "name": "Olympus Water US Holding Corp.",
+    "id": "XS2628989894",
+    "link": "https://www.finanzen.net/anleihen/a3lkbm-olympus-water-us-holding-anleihe"
+  },
+  {
+    "name": "ESPG AG",
+    "id": "DE000A2NBY22",
+    "link": "https://www.finanzen.net/anleihen/a2nby2-espg-anleihe"
+  },
+  {
+    "name": "ESPG AG",
+    "id": "DE000A351VD7",
+    "link": "https://www.finanzen.net/anleihen/a351vd-espg-anleihe"
+  },
+  {
+    "name": "Neue ZWL Zahnradwerk Leipzig GmbH",
+    "id": "DE000A351XF8",
+    "link": "https://www.finanzen.net/anleihen/a351xf-neue-zwl-zahnradwerk-leipzig-anleihe"
+  },
+  {
+    "name": "Banco BPM S.p.A.",
+    "id": "IT0005571309",
+    "link": "https://www.finanzen.net/anleihen/a3lrm0-banco-bpm-spa-anleihe"
+  },
+  {
+    "name": "IDFinance Spain S.A.U.",
+    "id": "XS2231806394",
+    "link": "https://www.finanzen.net/anleihen/a2823x-idfinance-spain-anleihe"
+  },
+  {
+    "name": "Eleving Group",
+    "id": "XS2393240887",
+    "link": "https://www.finanzen.net/anleihen/a3kxk8-eleving-group-anleihe"
+  },
+  {
+    "name": "Adler Pelzer Holding GmbH",
+    "id": "XS2623604233",
+    "link": "https://www.finanzen.net/anleihen/a351ub-adler-pelzer-holding-anleihe"
+  },
+  {
+    "name": "SCIL IV LLC",
+    "id": "XS2644942737",
+    "link": "https://www.finanzen.net/anleihen/a3lkql-scil-iv-llc-anleihe"
+  },
+  {
+    "name": "888 Acquisitions Ltd.",
+    "id": "XS2498546204",
+    "link": "https://www.finanzen.net/anleihen/a3k7hm-888-acquisitions-anleihe"
+  },
+  {
+    "name": "TVL Finance PLC",
+    "id": "XS2615792947",
+    "link": "https://www.finanzen.net/anleihen/a3lgy7-tvl-finance-anleihe"
+  },
+  {
+    "name": "Iceland Bondco PLC",
+    "id": "XS2660425401",
+    "link": "https://www.finanzen.net/anleihen/a3lln1-iceland-bondco-anleihe"
+  },
+  {
+    "name": "Benteler International AG",
+    "id": "XS2619047728",
+    "link": "https://www.finanzen.net/anleihen/a3lhec-benteler-international-anleihe"
+  },
+  {
+    "name": "HT Troplast GmbH",
+    "id": "XS2649707846",
+    "link": "https://www.finanzen.net/anleihen/a3510e-ht-troplast-anleihe"
+  },
+  {
+    "name": "HT Troplast GmbH",
+    "id": "XS2649707929",
+    "link": "https://www.finanzen.net/anleihen/a3510x-ht-troplast-anleihe"
+  },
+  {
+    "name": "Axactor ASA",
+    "id": "NO0011093718",
+    "link": "https://www.finanzen.net/anleihen/a3kvy6-axactor-asa-anleihe"
+  },
+  {
+    "name": "Stern Immobilien AG",
+    "id": "DE000A2G8WJ4",
+    "link": "https://www.finanzen.net/anleihen/a2g8wj-stern-immobilien-anleihe"
+  },
+  {
+    "name": "paragon GmbH & Co. KGaA",
+    "id": "DE000A2GSB86",
+    "link": "https://www.finanzen.net/anleihen/a2gsb8-paragonaa-anleihe"
+  },
+  {
+    "name": "Summer [BC] Holdco A S.a.r.l.",
+    "id": "XS2067265392",
+    "link": "https://www.finanzen.net/anleihen/a2r9n4-summer-bc-holdco-a-sarl-anleihe"
+  },
+  {
+    "name": "Verisure Holding AB",
+    "id": "XS2541437583",
+    "link": "https://www.finanzen.net/anleihen/a3k94d-verisure-holding-ab-anleihe"
+  },
+  {
+    "name": "Intrum AB",
+    "id": "XS2566291865",
+    "link": "https://www.finanzen.net/anleihen/a3lb1y-intrum-ab-anleihe"
+  },
+  {
+    "name": "Transcom Holding AB",
+    "id": "XS2351344622",
+    "link": "https://www.finanzen.net/anleihen/a3ksbh-transcom-holding-ab-anleihe"
+  },
+  {
+    "name": "Rimini BidCo S.p.A.",
+    "id": "XS2417486771",
+    "link": "https://www.finanzen.net/anleihen/a3kzun-rimini-bidco-spa-anleihe"
+  },
+  {
+    "name": "Cerved Group S.p.A.",
+    "id": "XS2445840809",
+    "link": "https://www.finanzen.net/anleihen/a3k2e6-cerved-group-spa-anleihe"
+  },
+  {
+    "name": "Monitchem Holdco 3 S.A.",
+    "id": "XS2615006983",
+    "link": "https://www.finanzen.net/anleihen/a3lg36-monitchem-holdco-3-anleihe"
+  },
+  {
+    "name": "Intesa Sanpaolo S.p.A.",
+    "id": "XS2678939427",
+    "link": "https://www.finanzen.net/anleihen/a3lm1k-intesa-sanpaolo-spa-anleihe"
+  },
+  {
+    "name": "B4H Brennstoffzelle4Home GmbH",
+    "id": "DE000A351N89",
+    "link": "https://www.finanzen.net/anleihen/a351n8-b4h-brennstoffzelle4home-anleihe"
+  },
+  {
+    "name": "Leef Blattwerk GmbH",
+    "id": "DE000A352ER1",
+    "link": "https://www.finanzen.net/anleihen/a352er-leef-blattwerk-anleihe"
+  },
+  {
+    "name": "Odyssey Europe Holdco S.à r.l.",
+    "id": "XS1818737287",
+    "link": "https://www.finanzen.net/anleihen/a190rh-odyssey-europe-holdco-sa-rl-anleihe"
+  },
+  {
+    "name": "Diebold Nixdorf Dutch Holding B.V.",
+    "id": "XS2206382868",
+    "link": "https://www.finanzen.net/anleihen/a28z2b-diebold-nixdorf-dutch-holding-bv-anleihe"
+  },
+  {
+    "name": "House of HR Group B.V.",
+    "id": "XS2541618299",
+    "link": "https://www.finanzen.net/anleihen/a3lb6j-house-of-hr-group-bv-anleihe"
+  },
+  {
+    "name": "APCOA Parking Holdings GmbH",
+    "id": "XS2366277056",
+    "link": "https://www.finanzen.net/anleihen/a3e5rq-apcoa-parking-holdings-anleihe"
+  },
+  {
+    "name": "Apollo Swedish Bidco AB",
+    "id": "XS2637969341",
+    "link": "https://www.finanzen.net/anleihen/a3lj7z-apollo-swedish-bidco-ab-anleihe"
+  },
+  {
+    "name": "Loarre Investments S.à r.l.",
+    "id": "XS2483511957",
+    "link": "https://www.finanzen.net/anleihen/a3k5px-loarre-investments-sa-rl-anleihe"
+  },
+  {
+    "name": "AnaCap Financial Europe S.A.",
+    "id": "XS1649046874",
+    "link": "https://www.finanzen.net/anleihen/a19lr8-anacap-financial-europe-anleihe"
+  },
+  {
+    "name": "Banca Transilvania S.A.",
+    "id": "XS2616733981",
+    "link": "https://www.finanzen.net/anleihen/a3lg6j-banca-transilvania-anleihe"
+  },
+  {
+    "name": "Van Lanschot Kempen N.V.",
+    "id": "XS2746119952",
+    "link": "https://www.finanzen.net/anleihen/a3ltwl-van-lanschot-kempen-anleihe"
+  },
+  {
+    "name": "Hypo-Wohnbaubank AG",
+    "id": "AT0000A0ZP31",
+    "link": "https://www.finanzen.net/anleihen/a1hkgu-hypo-wohnbaubank-anleihe"
+  },
+  {
+    "name": "Golden Goose S.p.A.",
+    "id": "XS2342638033",
+    "link": "https://www.finanzen.net/anleihen/a3kq8k-golden-goose-spa-anleihe"
+  },
+  {
+    "name": "MRG Finance UK PLC",
+    "id": "XS1897122278",
+    "link": "https://www.finanzen.net/anleihen/a2rtqh-mrg-finance-uk-anleihe"
+  },
+  {
+    "name": "Piraeus Financial Holdings S.A.",
+    "id": "XS2354777265",
+    "link": "https://www.finanzen.net/anleihen/a3ksme-piraeus-financial-holdings-anleihe"
+  },
+  {
+    "name": "IHO Verwaltungs GmbH",
+    "id": "XS2606019383",
+    "link": "https://www.finanzen.net/anleihen/a351l6-iho-verwaltungs-anleihe"
+  },
+  {
+    "name": "Monitchem Holdco 3 S.A.",
+    "id": "XS2615006470",
+    "link": "https://www.finanzen.net/anleihen/a3lg38-monitchem-holdco-3-anleihe"
+  },
+  {
+    "name": "Opus-Chartered Issuances S.A.",
+    "id": "DE000A281N01",
+    "link": "https://www.finanzen.net/anleihen/a281n0-opus-chartered-issuances-anleihe"
+  },
+  {
+    "name": "Opus-Chartered Issuances S.A.",
+    "id": "DE000A281NZ6",
+    "link": "https://www.finanzen.net/anleihen/a281nz-opus-chartered-issuances-anleihe"
+  },
+  {
+    "name": "TK Elevator Midco GmbH",
+    "id": "XS2199597613",
+    "link": "https://www.finanzen.net/anleihen/a3e45a-tk-elevator-midco-anleihe"
+  },
+  {
+    "name": "PCF GmbH",
+    "id": "XS2333302052",
+    "link": "https://www.finanzen.net/anleihen/a3h3k6-pcf-anleihe"
+  },
+  {
+    "name": "Deuce FinCo PLC",
+    "id": "XS2351480640",
+    "link": "https://www.finanzen.net/anleihen/a3ksgb-deuce-finco-anleihe"
+  },
+  {
+    "name": "IPD 3 B.V.",
+    "id": "XS2631199168",
+    "link": "https://www.finanzen.net/anleihen/a3ljyu-ipd-3-bv-anleihe"
+  },
+  {
+    "name": "Cullinan Holdco SCSp",
+    "id": "XS2397354015",
+    "link": "https://www.finanzen.net/anleihen/a3kxhy-cullinan-holdco-scsp-anleihe"
+  },
+  {
+    "name": "Cheplapharm Arzneimittel GmbH",
+    "id": "XS2618840974",
+    "link": "https://www.finanzen.net/anleihen/a351tf-cheplapharm-arzneimittel-anleihe"
+  },
+  {
+    "name": "BURGER KING France SAS",
+    "id": "XS2403031912",
+    "link": "https://www.finanzen.net/anleihen/a3kx7q-burger-king-france-sas-anleihe"
+  },
+  {
+    "name": "MBH Bank Nyrt.",
+    "id": "XS2701655677",
+    "link": "https://www.finanzen.net/anleihen/a3lpyy-mbh-bank-nyrt-anleihe"
+  },
+  {
+    "name": "PLT VII Finance S.à.r.l.",
+    "id": "XS2200172067",
+    "link": "https://www.finanzen.net/anleihen/a28zw9-plt-vii-finance-sarl-anleihe"
+  },
+  {
+    "name": "Sherwood Financing PLC",
+    "id": "XS2010027535",
+    "link": "https://www.finanzen.net/anleihen/a3kyhc-sherwood-financing-anleihe"
+  },
+  {
+    "name": "Metalcorp Group S.A.",
+    "id": "DE000A3KRAP3",
+    "link": "https://www.finanzen.net/anleihen/a3krap-metalcorp-group-anleihe"
+  },
+  {
+    "name": "DTEK Renewables Finance B.V.",
+    "id": "XS2069980246",
+    "link": "https://www.finanzen.net/anleihen/a2r96p-dtek-renewables-finance-bv-anleihe"
+  },
+  {
+    "name": "Vallourec S.A.",
+    "id": "XS2352739184",
+    "link": "https://www.finanzen.net/anleihen/a3kttg-vallourec-anleihe"
+  },
+  {
+    "name": "Dana Financing Luxembourg S.a.r.l.",
+    "id": "XS2623489627",
+    "link": "https://www.finanzen.net/anleihen/a3lhv8-dana-financing-luxembourg-sarl-anleihe"
+  },
+  {
+    "name": "INEOS Quattro Finance 2 PLC",
+    "id": "XS2719090636",
+    "link": "https://www.finanzen.net/anleihen/a3lq2a-ineos-quattro-finance-2-anleihe"
+  },
+  {
+    "name": "Novafives S.A.S.",
+    "id": "XS1713466149",
+    "link": "https://www.finanzen.net/anleihen/a19zhp-novafivess-anleihe"
+  },
+  {
+    "name": "Cirsa Finance International S.à.r.l.",
+    "id": "XS2649696890",
+    "link": "https://www.finanzen.net/anleihen/a3lk3m-cirsa-finance-international-sarl-anleihe"
+  },
+  {
+    "name": "DCM US Multi-Family Homes PLC",
+    "id": "GB00BMHMP637",
+    "link": "https://www.finanzen.net/anleihen/a285x7-dcm-us-multi-family-homes-anleihe"
+  },
+  {
+    "name": "Conceria Pasubio S.p.A.",
+    "id": "XS2389334124",
+    "link": "https://www.finanzen.net/anleihen/a3kwln-conceria-pasubio-spa-anleihe"
+  },
+  {
+    "name": "BPER Banca S.p.A.",
+    "id": "IT0005579492",
+    "link": "https://www.finanzen.net/anleihen/a3ltah-bper-banca-spa-anleihe"
+  },
+  {
+    "name": "Banff Merger Sub Inc.",
+    "id": "XS1864418857",
+    "link": "https://www.finanzen.net/anleihen/a194r1-banff-merger-sub-anleihe"
+  },
+  {
+    "name": "Marex Group PLC",
+    "id": "XS2580291354",
+    "link": "https://www.finanzen.net/anleihen/a3ldqf-marex-group-anleihe"
+  },
+  {
+    "name": "DIAC S.A.",
+    "id": "FR0000047821",
+    "link": "https://www.finanzen.net/anleihen/a0tje4-diac-anleihe"
+  },
+  {
+    "name": "SCIL IV LLC",
+    "id": "XS2401851485",
+    "link": "https://www.finanzen.net/anleihen/a3kx2n-scil-iv-llc-anleihe"
+  },
+  {
+    "name": "Ren10 Holding AB",
+    "id": "XS2439087367",
+    "link": "https://www.finanzen.net/anleihen/a3k1fp-ren10-holding-ab-anleihe"
+  },
+  {
+    "name": "AOC Leipzig Berliner Straße GmbH",
+    "id": "DE000A30VGZ2",
+    "link": "https://www.finanzen.net/anleihen/a30vgz-aoc-leipzig-berliner-strasse-anleihe"
+  },
+  {
+    "name": "AOC Leipzig Täubchenweg GmbH",
+    "id": "DE000A30VKD1",
+    "link": "https://www.finanzen.net/anleihen/a30vkd-aoc-leipzig-taeubchenweg-anleihe"
+  },
+  {
+    "name": "Belano Medical AG",
+    "id": "DE000A3H2UW2",
+    "link": "https://www.finanzen.net/anleihen/a3h2uw-belano-medical-anleihe"
+  },
+  {
+    "name": "National Bank of Greece S.A.",
+    "id": "XS2028846363",
+    "link": "https://www.finanzen.net/anleihen/a2r5cp-national-bank-of-greece-anleihe"
+  },
+  {
+    "name": "Kirk Beauty SUN GmbH",
+    "id": "XS2326505240",
+    "link": "https://www.finanzen.net/anleihen/a3h3kl-kirk-beauty-sun-anleihe"
+  },
+  {
+    "name": "Pinnacle Bidco PLC",
+    "id": "XS2696090286",
+    "link": "https://www.finanzen.net/anleihen/a3lpbz-pinnacle-bidco-anleihe"
+  },
+  {
+    "name": "Encore Capital Group Inc.",
+    "id": "XS2271247178",
+    "link": "https://www.finanzen.net/anleihen/a286mk-encore-capital-group-anleihe"
+  },
+  {
+    "name": "Business Integration Partners S.p.A",
+    "id": "XS2390292303",
+    "link": "https://www.finanzen.net/anleihen/a3kxkm-business-integration-partners-spa-anleihe"
+  },
+  {
+    "name": "Naviera Armas S.A.",
+    "id": "XS1717590563",
+    "link": "https://www.finanzen.net/anleihen/a19scp-naviera-armas-anleihe"
+  },
+  {
+    "name": "Oriflame Investment Holding PLC",
+    "id": "XS2337349265",
+    "link": "https://www.finanzen.net/anleihen/a3kqet-oriflame-investment-holding-anleihe"
+  },
+  {
+    "name": "United Group B.V.",
+    "id": "XS2758099779",
+    "link": "https://www.finanzen.net/anleihen/a3lt4f-united-group-bv-anleihe"
+  },
+  {
+    "name": "United Group B.V.",
+    "id": "XS2759982650",
+    "link": "https://www.finanzen.net/anleihen/a3lt4y-united-group-bv-anleihe"
+  },
+  {
+    "name": "Orange S.A.",
+    "id": "FR0000471930",
+    "link": "https://www.finanzen.net/anleihen/727319-orange-anleihe"
+  },
+  {
+    "name": "Blue Energy Group AG",
+    "id": "DE000A2GS336",
+    "link": "https://www.finanzen.net/anleihen/a2gs33-blue-energy-group-anleihe"
+  },
+  {
+    "name": "Opus-Chartered Issuances S.A.",
+    "id": "DE000A3KMRH5",
+    "link": "https://www.finanzen.net/anleihen/a3kmrh-opus-chartered-issuances-anleihe"
+  },
+  {
+    "name": "Propifi Bonds PLC",
+    "id": "GB00BMFXJ334",
+    "link": "https://www.finanzen.net/anleihen/a3lcl1-propifi-bonds-anleihe"
+  },
+  {
+    "name": "Madeira, Regiao Autónoma",
+    "id": "PTRAMMOE0009",
+    "link": "https://www.finanzen.net/anleihen/a1vjet-madeira-regiao-autonoma-anleihe"
+  },
+  {
+    "name": "Allwyn Entertainment Financing [UK] PLC",
+    "id": "XS2440790835",
+    "link": "https://www.finanzen.net/anleihen/a3k12r-allwyn-entertainment-financing-uk-anleihe"
+  },
+  {
+    "name": "HYPO TIROL BANK AG",
+    "id": "AT0000A1GTJ6",
+    "link": "https://www.finanzen.net/anleihen/a1z7yh-hypo-tirol-bank-anleihe"
+  },
+  {
+    "name": "Agri Resources Group S.A.",
+    "id": "DE000A287088",
+    "link": "https://www.finanzen.net/anleihen/a28708-agri-resources-group-anleihe"
+  },
+  {
+    "name": "BDT Media Automation GmbH",
+    "id": "DE000A2E4A94",
+    "link": "https://www.finanzen.net/anleihen/a2e4a9-bdt-media-automation-anleihe"
+  },
+  {
+    "name": "SoWiTec group GmbH",
+    "id": "DE000A2NBZ21",
+    "link": "https://www.finanzen.net/anleihen/a2nbz2-sowitec-group-anleihe"
+  },
+  {
+    "name": "Katjesgreenfood GmbH & Co. KG",
+    "id": "DE000A30V3F1",
+    "link": "https://www.finanzen.net/anleihen/a30v3f-katjesgreenfood-anleihe"
+  },
+  {
+    "name": "SoWiTec group GmbH",
+    "id": "DE000A30V6L2",
+    "link": "https://www.finanzen.net/anleihen/a30v6l-sowitec-group-anleihe"
+  },
+  {
+    "name": "Deutsche Effecten- und Wechsel-Beteiligungsgesellschaft AG",
+    "id": "DE000A351NS2",
+    "link": "https://www.finanzen.net/anleihen/a351ns-deutsche-effecten-und-wechsel-beteiligungsgesellschaft-anleihe"
+  },
+  {
+    "name": "The Grounds Real Estate Development AG",
+    "id": "DE000A3H3FH2",
+    "link": "https://www.finanzen.net/anleihen/a3h3fh-the-grounds-real-estate-development-anleihe"
+  },
+  {
+    "name": "Encore Issuances S.A.",
+    "id": "DE000A3KNDU6",
+    "link": "https://www.finanzen.net/anleihen/a3kndu-encore-issuances-anleihe"
+  },
+  {
+    "name": "AustriaEnergy International GmbH",
+    "id": "DE000A3LE0J4",
+    "link": "https://www.finanzen.net/anleihen/a3le0j-austriaenergy-international-anleihe"
+  },
+  {
+    "name": "Sustainable Capital PLC",
+    "id": "GB00BMG7PR03",
+    "link": "https://www.finanzen.net/anleihen/a3kptz-sustainable-capital-anleihe"
+  },
+  {
+    "name": "Sustainable Capital PLC",
+    "id": "GB00BMZ1JD78",
+    "link": "https://www.finanzen.net/anleihen/a3ks5a-sustainable-capital-anleihe"
+  },
+  {
+    "name": "DEAG Deutsche Entertainment AG",
+    "id": "NO0012487596",
+    "link": "https://www.finanzen.net/anleihen/a351vb-deag-deutsche-entertainment-anleihe"
+  },
+  {
+    "name": "Glitnir HoldCo ehf.",
+    "id": "XS0221640070",
+    "link": "https://www.finanzen.net/anleihen/a0e5ve-glitnir-holdco-ehf-anleihe"
+  },
+  {
+    "name": "Banca Monte dei Paschi di Siena S.p.A.",
+    "id": "XS2106849727",
+    "link": "https://www.finanzen.net/anleihen/a28shq-banca-monte-dei-paschi-di-siena-spa-anleihe"
+  },
+  {
+    "name": "Altice France Holding S.A.",
+    "id": "XS2138128314",
+    "link": "https://www.finanzen.net/anleihen/a28vht-altice-france-holding-anleihe"
+  },
+  {
+    "name": "IM Group S.A.S.",
+    "id": "XS2587104444",
+    "link": "https://www.finanzen.net/anleihen/a3ld6g-im-groups-anleihe"
+  },
+  {
+    "name": "National Bank of Greece S.A.",
+    "id": "XS2595343059",
+    "link": "https://www.finanzen.net/anleihen/a3ln8l-national-bank-of-greece-anleihe"
+  },
+  {
+    "name": "Suncap SCOOP S.A.",
+    "id": "XS2599155384",
+    "link": "https://www.finanzen.net/anleihen/a3le0u-suncap-scoop-anleihe"
+  },
+  {
+    "name": "IPD 3 B.V.",
+    "id": "XS2631198863",
+    "link": "https://www.finanzen.net/anleihen/a3ljyv-ipd-3-bv-anleihe"
+  }
+]
