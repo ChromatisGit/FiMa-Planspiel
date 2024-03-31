@@ -43,7 +43,7 @@ function getLetztenZinstermin(naechsterTermin, anzahlTermine) {
     // Monate gehen von 0-11
     if (month < 0) {
         termin.setFullYear(termin.getFullYear() - 1);
-        month += 11;
+        month += 12;
     }
     termin.setMonth(month);
     const letzterZinstermin = format(termin, 'dd-MM-yyyy')
