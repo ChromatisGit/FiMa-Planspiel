@@ -2,3 +2,5 @@ node_modules/
 *.json
 *.csv
 !branchen.json
+*.xlsx
+*txt
