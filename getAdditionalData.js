@@ -18,21 +18,35 @@ function toNumber(n) {
     return parseFloat(n.replace(',', '.'))
 }
 
-function findBestBoerse($) {
-    let boerseName = "";
-    let bestKurs = 10000;
+async function findBestBoerse(url) {
+    const prefixLength = 'https://www.finanzen.net/anleihen/'.length;
+    const link = 'https://www.finanzen.net/anleihen/boersenplaetze/' + url.slice(prefixLength)
+
+    const response = await fetch(link);
+    const body = await response.text();
+    const $ = cheerio.load(body);
+
+    const boersenKurse = []
 
     const targetTable = $(`th:contains("Börse")`);
     targetTable.closest('thead').next().find('tr').each((_, row) => {
         const kurs = toNumber($(row).find('td:eq(1)').text().trim().slice(0, -2));
-        if (kurs >= bestKurs || kurs === 0) {
-            return true
-        }
-        bestKurs = kurs
-        boerseName = $(row).find('td:first a').text().trim();
+        const aufrufDatum = parse($(row).find('td:eq(7)').text().trim(), 'dd.MM.yyyy', new Date());
+        const boerse = $(row).find('td:first a').text().trim()
+        boersenKurse.push({ kurs, aufrufDatum, boerse })
     })
 
-    return { kurs: bestKurs, boerse: boerseName }
+    let datumLimit = new Date(Math.max(...boersenKurse.map(e => e.aufrufDatum)))
+    datumLimit.setDate(datumLimit.getDate() - 1)
+
+    const bestBoerse = boersenKurse
+        .filter(e => e.aufrufDatum >= datumLimit)
+        .filter(e => e.kurs > 0)
+        .reduce((minObj, obj) => {
+            return obj.kurs < minObj.kurs ? obj : minObj;
+        }, { kurs: Infinity });
+
+    return bestBoerse;
 }
 
 function getLetztenZinstermin(naechsterTermin, anzahlTermine) {
@@ -65,7 +79,7 @@ async function getAdditionalData(anleihe) {
     anleihe.anzahlZinstermine = toNumber(findAttribute($, "Zinstermine pro Jahr"));
     anleihe.land = findAttribute($, "Land")
     anleihe.faelligkeit = findAttribute($, "Fälligkeit").replaceAll('.', '-');
-    const { kurs, boerse } = findBestBoerse($)
+    const { kurs, boerse } = await findBestBoerse(anleihe.link)
     anleihe.kurs = kurs / 100;
     anleihe.boerse = boerse;
 
@@ -102,9 +116,9 @@ async function appendEntryToCSV(filePath, entry) {
 
 async function processAnleihen() {
     let skipCount = 0;
-    const currentAnleihenPath = path.join(__dirname, 'aktuelleAnleihen.json');
-    const unsereAnleihenPath = path.join(__dirname, 'unsereAnleihen.json');
-    const neueAnleihenCSVPath = path.join(__dirname, 'neueAnleihen.csv');
+    const currentAnleihenPath = path.join(__dirname, 'data/aktuelleAnleihen.json');
+    const unsereAnleihenPath = path.join(__dirname, 'data/unsereAnleihen.json');
+    const neueAnleihenCSVPath = path.join(__dirname, 'data/neueAnleihen.csv');
 
     const [aktuelleAnleihen, unsereAnleihen] = await Promise.all([
         readJsonFile(currentAnleihenPath),
