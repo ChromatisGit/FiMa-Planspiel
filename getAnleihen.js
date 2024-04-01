@@ -35,7 +35,7 @@ async function readJsonFile(filePath) {
 }
 
 async function getAnleihen() {
-    const branchenPath = path.join(__dirname, 'branchen.json');
+    const branchenPath = path.join(__dirname, 'data/branchen.json');
     const branchen = readJsonFile(branchenPath)
     const anleihen = []
     const branchenlos = []
@@ -68,10 +68,10 @@ async function getAnleihen() {
         page++;
     }
 
-    fs.writeFile('aktuelleAnleihen.json', JSON.stringify(anleihen, null, 2))
+    fs.writeFile('data/aktuelleAnleihen.json', JSON.stringify(anleihen, null, 2))
     console.log('Exported Anleihen')
     if (branchenlos.length > 0) {
-        fs.writeFile('branchenlos.csv', convertJSONtoCSV(branchenlos))
+        fs.writeFile('data/branchenlos.csv', convertJSONtoCSV(branchenlos))
         console.log(`${branchenlos.length} Anleihen ohne Branche gefunden!`)
     }
 }
