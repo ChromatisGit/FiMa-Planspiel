@@ -1,8 +1,28 @@
 const cheerio = require('cheerio');
-const { parse, format, differenceInDays } = require('date-fns');
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
+
+function convertJSONtoCSV(obj, keys) {
+    const csvRows = obj.map((item) => {
+        return keys.map(key => {
+            let field = item[key];
+            if (typeof field === 'number') {
+                field = field.toString().replace('.', ','); // Replace decimal period with decimal comma because Excel sucks and ignores regional settings
+            }
+            if (field instanceof Date) {
+                field = format(field, 'dd-MM-yyyy')
+            }
+            if (typeof field === 'string' && field.includes(',')) {
+                field = `"${field}"`; // Enclose fields containing commas in quotes
+            }
+            return field;
+        }).join(',');
+    });
+
+    const csv = [keys.join(','), ...csvRows].join('\n');
+    return csv;
+}
 
 function findAttribute($, key) {
     const targetRow = $(`td:contains("${key}")`);
@@ -18,83 +38,47 @@ function toNumber(n) {
     return parseFloat(n.replace(',', '.'))
 }
 
-async function findBestBoerse(url) {
-    const prefixLength = 'https://www.finanzen.net/anleihen/'.length;
-    const link = 'https://www.finanzen.net/anleihen/boersenplaetze/' + url.slice(prefixLength)
-
-    const response = await fetch(link);
-    const body = await response.text();
-    const $ = cheerio.load(body);
-
-    const boersenKurse = []
-
-    const targetTable = $(`th:contains("Börse")`);
-    targetTable.closest('thead').next().find('tr').each((_, row) => {
-        const kurs = toNumber($(row).find('td:eq(1)').text().trim().slice(0, -2));
-        const aufrufDatum = parse($(row).find('td:eq(7)').text().trim(), 'dd.MM.yyyy', new Date());
-        const boerse = $(row).find('td:first a').text().trim()
-        boersenKurse.push({ kurs, aufrufDatum, boerse })
-    })
-
-    let datumLimit = new Date(Math.max(...boersenKurse.map(e => e.aufrufDatum)))
-    datumLimit.setDate(datumLimit.getDate() - 1)
-
-    const bestBoerse = boersenKurse
-        .filter(e => e.aufrufDatum >= datumLimit)
-        .filter(e => e.kurs > 0)
-        .reduce((minObj, obj) => {
-            return obj.kurs < minObj.kurs ? obj : minObj;
-        }, { kurs: Infinity });
-
-    return bestBoerse;
-}
-
-function getLetztenZinstermin(naechsterTermin, anzahlTermine) {
-    const termin = parse(naechsterTermin, 'dd-MM-yyyy', new Date());
-
-    let month = termin.getMonth();
-    month -= 12 / anzahlTermine;
-    // Monate gehen von 0-11
-    if (month < 0) {
-        termin.setFullYear(termin.getFullYear() - 1);
-        month += 12;
-    }
-    termin.setMonth(month);
-    const letzterZinstermin = format(termin, 'dd-MM-yyyy')
-
-    const today = new Date();
-    const tageBisTermin = differenceInDays(today, termin);
-    return { letzterZinstermin, tageBisTermin }
-}
-
-
 async function getAdditionalData(anleihe) {
-    const response = await fetch(anleihe.link);
-    const body = await response.text();
-    const $ = cheerio.load(body);
+    let body;
 
+    try {
+        const response = await fetch(anleihe.link);
+        if (!response.ok) {
+            console.error('Error:', response.status);
+            throw new Error(`HTTP Error: ${response.status}`);
+        }
+        body = await response.text();
+    } catch (error) {
+        console.error(`Network error connecting to ${anleihe.name} (${anleihe.link}), skipping!`, error);
+        return null
+    }
 
-    anleihe.stueckelung = toNumber(findAttribute($, "Stückelung"));
-    anleihe.coupon = toNumber(findAttribute($, "Kupon in %")) / 100;
-    anleihe.anzahlZinstermine = toNumber(findAttribute($, "Zinstermine pro Jahr"));
-    anleihe.land = findAttribute($, "Land")
-    anleihe.faelligkeit = findAttribute($, "Fälligkeit").replaceAll('.', '-');
-    const { kurs, boerse } = await findBestBoerse(anleihe.link)
-    anleihe.kurs = kurs / 100;
-    anleihe.boerse = boerse;
+    anleihe.ignorieren = false
+    if (body.includes('Die Anleihe ist nicht mehr aktiv.')) {
+        anleihe.ignorieren = true
+        console.error(`${anleihe.name} (${anleihe.link}) is inactive, ignoring!`);
+        return anleihe;
+    }
 
-    const naechsterTermin = findAttribute($, "nächster Zinstermin").replaceAll('.', '-');
-    const { letzterZinstermin, tageBisTermin } = getLetztenZinstermin(naechsterTermin, anleihe.anzahlZinstermine);
-    anleihe.letzterZinstermin = letzterZinstermin;
-    anleihe.kaufpreis = (anleihe.kurs * anleihe.stueckelung + anleihe.coupon * anleihe.stueckelung * tageBisTermin / 365).toFixed(6);
-    anleihe.couponRendite = (anleihe.coupon * anleihe.stueckelung / anleihe.kaufpreis).toFixed(6);
+    try {
+        const $ = cheerio.load(body);
+        anleihe.stueckelung = toNumber(findAttribute($, "Stückelung"));
+        anleihe.coupon = toNumber(findAttribute($, "Kupon in %")) / 100;
+        anleihe.anzahlZinstermine = toNumber(findAttribute($, "Zinstermine pro Jahr"));
+        anleihe.land = findAttribute($, "Land")
+        anleihe.faelligkeit = findAttribute($, "Fälligkeit").replaceAll('.', '-');
+        anleihe.zinstermin = findAttribute($, "nächster Zinstermin").replaceAll('.', '-');
+    } catch (error) {
+        anleihe.ignorieren = true;
+        console.error(`Couldn't process ${anleihe.name} (${anleihe.link}), ignoring!\n${error}`);
+    }
 
     return anleihe;
 }
 
 async function readJsonFile(filePath) {
     try {
-        const data = await fs.promises.readFile(filePath, 'utf8');
+        const data = await fs.readFile(filePath, 'utf8');
         return JSON.parse(data);
     } catch (error) {
         console.error(`Error reading file from disk: ${error}`);
@@ -102,57 +86,77 @@ async function readJsonFile(filePath) {
     }
 }
 
-async function appendEntryToCSV(filePath, entry) {
-    try {
-        let csvRow = Object.values(entry).map(value => {
-            return typeof value === 'string' && value.includes(',') ? `"${value}"` : value;
-        }).join(',') + '\n';
-        await fs.promises.appendFile(filePath, csvRow, 'utf8');
-    } catch (error) {
-        console.error(`Error appending to CSV file: ${error}`);
-        throw error;
+async function updateStorage({ input, storage, branchenPath, missingBranchenPath, storagePath }) {
+    const missingBranchen = [];
+    const branchen = await readJsonFile(branchenPath)
+    let updatedStorage = false;
+    let entryCount = 0;
+
+    for (let anleihe of input) {
+        entryCount++;
+        if (storage.hasOwnProperty(anleihe.id)) {
+            console.log(`${entryCount} is in storage!`)
+            continue;
+        }
+
+        if (!branchen.hasOwnProperty(anleihe.name)) {
+            if (!missingBranchen.some((a) => a.name === anleihe.name)) {
+                missingBranchen.push(anleihe)
+            }
+            console.log(`${entryCount} is missing it's branche!`)
+            continue;
+        }
+
+        anleihe.branche = branchen[anleihe.name];
+        if (anleihe.branche === 'Insolvent') {
+            anleihe.ignorieren = true
+            storage[anleihe.id] = anleihe;
+            updatedStorage = true;
+            console.log(`${entryCount} has been added to storage!`)
+            continue;
+        }
+
+        anleihe = await getAdditionalData(anleihe);
+        if (anleihe === null) {
+            continue;
+        }
+
+        storage[anleihe.id] = anleihe;
+        updatedStorage = true;
+        console.log(`${entryCount} has been added to storage!`)
+    }
+
+    if(updatedStorage) {
+        console.log(storagePath)
+        fs.writeFile(storagePath, JSON.stringify(storage, null, 2));
+    }
+
+    if (missingBranchen.length > 0) {
+        fs.writeFile(missingBranchenPath, convertJSONtoCSV(missingBranchen, ['name', 'link']))
+        console.log(`${missingBranchen.length} Anleihen ohne Branche gefunden!`)
     }
 }
 
 async function processAnleihen() {
-    let skipCount = 0;
-    const currentAnleihenPath = path.join(__dirname, 'data/aktuelleAnleihen.json');
-    const unsereAnleihenPath = path.join(__dirname, 'data/unsereAnleihen.json');
-    const neueAnleihenCSVPath = path.join(__dirname, 'data/neueAnleihen.csv');
+    const inputPath = path.join(__dirname, 'data/fetchedAnleihen.json');
+    const outputPath = path.join(__dirname, 'data/fetchedAnleihenWithData.json');
+    const storagePath = path.join(__dirname, 'data/storage/anleihenDaten.json');
+    const branchenPath = path.join(__dirname, 'data/storage/branchen.json');
+    const missingBranchenPath = path.join(__dirname, 'branchenlos.csv');
 
-    const [aktuelleAnleihen, unsereAnleihen] = await Promise.all([
-        readJsonFile(currentAnleihenPath),
-        readJsonFile(unsereAnleihenPath)
+    const [input, storage] = await Promise.all([
+        readJsonFile(inputPath),
+        readJsonFile(storagePath)
     ]);
 
-    if (!fs.existsSync(neueAnleihenCSVPath) || fs.statSync(neueAnleihenCSVPath) === 0) {
-        const updatedAnleihe = await getAdditionalData(aktuelleAnleihen[0]);
-        const csvContent = Object.keys(updatedAnleihe).join(',') + '\n';
-        await fs.promises.appendFile(neueAnleihenCSVPath, csvContent, 'utf8');
-    }
+    await updateStorage({ input, storage, branchenPath, missingBranchenPath, storagePath });
 
-    let processedCount = skipCount;
-    for (const anleihe of aktuelleAnleihen) {
-        if (skipCount > 0) {
-            skipCount--;
-            continue;
-        }
-        if (unsereAnleihen.some((uAnleihe) => uAnleihe.id === anleihe.id)) {
-            continue;
-        }
+    const output = input
+        .map(anleihe => storage[anleihe.id])
+        .filter(anleihe => anleihe)
+        .filter(anleihe => !anleihe.ignorieren);
 
-        try {
-            const updatedAnleihe = await getAdditionalData(anleihe);
-            await appendEntryToCSV(neueAnleihenCSVPath, updatedAnleihe);
-        } catch (error) {
-            console.error(`Couldn't process ${anleihe.name} (${anleihe.link}), skipping!\n${error}`);
-        }
-
-        processedCount++;
-        console.log(`Processed entry ${processedCount}`);
-    }
-
-    console.log('Processing completed.');
+    fs.writeFile(outputPath, JSON.stringify(output, undefined, 2));
 }
 
-processAnleihen();
+processAnleihen()
