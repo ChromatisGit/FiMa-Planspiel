@@ -1,6 +1,5 @@
 const cheerio = require('cheerio');
 const fs = require('fs').promises;
-const path = require('path');
 
 const MIN_ZINS = 6;
 const CURRENCY = 'EUR';

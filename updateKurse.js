@@ -2,30 +2,9 @@ const ExcelJS = require('exceljs');
 const fs = require('fs');
 const cheerio = require('cheerio');
 const { format } = require('date-fns');
-
-function toNumber(n) {
-    return parseFloat(n.replace(',', '.'))
-}
-
-async function fetchDataWithRetry(url, options, retries = 0) {
-    try {
-        const response = await fetch(url, options);
-
-        if (response.ok) {
-            return await response.text();
-        } else if (response.status === 403 && retries < maxRetries) {
-            console.error('Access Denied. Retrying...');
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            return fetchDataWithRetry(url, options, retries + 1);
-        } else {
-            console.error('Error:', response.status);
-            throw new Error(`HTTP Error: ${response.status}`);
-        }
-    } catch (error) {
-        console.error('Network error:', error);
-        throw error;
-    }
-}
+import { convertJSONtoCSV } from './fileManager.js';
+import { fetchDataWithRetry } from './fetchManager.js';
+import { toNumber } from './dataTransformer.js';
 
 async function readJsonFromSheet(filePath, sheetName, startColumn, endColumn) {
     const workbook = new ExcelJS.Workbook();
@@ -63,27 +42,6 @@ function calcLetzterZinstermin(zinszahlungenProJahr, ersteZinszahlung, heute) {
     letzteZinszahlung.setMonth(letzteZinszahlung.getMonth() + Math.floor(anzahlZinszahlungen * (12 / zinszahlungenProJahr)));
 
     return {anzahlZinszahlungen, letzteZinszahlung};
-}
-
-function convertJSONtoCSV(obj, keys) {
-    const csvRows = obj.map((item) => {
-        return keys.map(key => {
-            let field = item[key];
-            if (typeof field === 'number') {
-                field = field.toString().replace('.', ','); // Replace decimal period with decimal comma because Excel sucks and ignores regional settings
-            }
-            if (field instanceof Date) {
-                field = format(field, 'dd-MM-yyyy')
-            }
-            if (typeof field === 'string' && field.includes(',')) {
-                field = `"${field}"`; // Enclose fields containing commas in quotes
-            }
-            return field;
-        }).join(',');
-    });
-
-    const csv = [keys.join(','), ...csvRows].join('\n');
-    return csv;
 }
 
 const BoersenCodeMap = {

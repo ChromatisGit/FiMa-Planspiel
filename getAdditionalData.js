@@ -1,28 +1,8 @@
 const cheerio = require('cheerio');
 const fs = require('fs').promises;
 const path = require('path');
-
-
-function convertJSONtoCSV(obj, keys) {
-    const csvRows = obj.map((item) => {
-        return keys.map(key => {
-            let field = item[key];
-            if (typeof field === 'number') {
-                field = field.toString().replace('.', ','); // Replace decimal period with decimal comma because Excel sucks and ignores regional settings
-            }
-            if (field instanceof Date) {
-                field = format(field, 'dd-MM-yyyy')
-            }
-            if (typeof field === 'string' && field.includes(',')) {
-                field = `"${field}"`; // Enclose fields containing commas in quotes
-            }
-            return field;
-        }).join(',');
-    });
-
-    const csv = [keys.join(','), ...csvRows].join('\n');
-    return csv;
-}
+import { convertJSONtoCSV, readJsonFile } from './fileManager.js';
+import { toNumber } from './dataTransformer.js';
 
 function findAttribute($, key) {
     const targetRow = $(`td:contains("${key}")`);
@@ -32,10 +12,6 @@ function findAttribute($, key) {
     }
 
     return targetRow.first().next().text().trim();
-}
-
-function toNumber(n) {
-    return parseFloat(n.replace(',', '.'))
 }
 
 async function getAdditionalData(anleihe) {
@@ -74,16 +50,6 @@ async function getAdditionalData(anleihe) {
     }
 
     return anleihe;
-}
-
-async function readJsonFile(filePath) {
-    try {
-        const data = await fs.readFile(filePath, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error(`Error reading file from disk: ${error}`);
-        throw error;
-    }
 }
 
 async function updateStorage({ input, storage, branchenPath, missingBranchenPath, storagePath }) {
