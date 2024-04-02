@@ -1,4 +1,5 @@
 async function fetchDataWithRetry(url, options, retries = 0) {
+    const maxRetries = 3;
     try {
         const response = await fetch(url, options);
 
