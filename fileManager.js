@@ -1,37 +1,31 @@
-export function convertJSONtoCSV(obj, keys) {
+const ExcelJS = require('exceljs');
+const fs = require('fs').promises;
+const { toCSVString } = require('./dataTransformer.js');
+
+function convertJSONtoCSV(obj, keys) {
     const csvRows = obj.map((item) => {
-        return keys.map(key => {
-            let field = item[key];
-            if (typeof field === 'number') {
-                field = field.toString().replace('.', ','); // Replace decimal period with decimal comma because Excel sucks and ignores regional settings
-            }
-            if (field instanceof Date) {
-                field = format(field, 'dd-MM-yyyy')
-            }
-            if (typeof field === 'string' && field.includes(',')) {
-                field = `"${field}"`; // Enclose fields containing commas in quotes
-            }
-            return field;
-        }).join(',');
+        return keys
+        .map(key => toCSVString(item[key]))
+        .join(',');
     });
 
     const csv = [keys.join(','), ...csvRows].join('\n');
     return csv;
 }
 
-export async function appendEntryToCSV(filePath, entry) {
+async function appendEntryToCSV(filePath, entry, keys) {
     try {
-        let csvRow = Object.values(entry).map(value => {
-            return typeof value === 'string' && value.includes(',') ? `"${value}"` : value;
-        }).join(',') + '\n';
-        await fs.promises.appendFile(filePath, csvRow, 'utf8');
+        let csvRow = keys
+        .map(key => toCSVString(entry[key]))
+        .join(',') + '\n';
+        await fs.appendFile(filePath, csvRow, 'utf8');
     } catch (error) {
         console.error(`Error appending to CSV file: ${error}`);
         throw error;
     }
 }
 
-export async function readJsonFile(filePath) {
+async function readJsonFile(filePath) {
     try {
         const data = await fs.readFile(filePath, 'utf8');
         return JSON.parse(data);
@@ -40,3 +34,30 @@ export async function readJsonFile(filePath) {
         throw error;
     }
 }
+
+async function readJsonFromSheet(filePath, sheetName, startColumn, endColumn) {
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(filePath);
+
+    const worksheet = workbook.getWorksheet(sheetName);
+    if (!worksheet) {
+        throw new Error(`Sheet "${sheetName}" not found.`);
+    }
+
+    const jsonData = [];
+
+    worksheet.eachRow({ includeEmpty: false }, (row) => {
+        const rowData = {};
+        for (let i = startColumn; i <= endColumn; i++) {
+            const cell = row.getCell(i);
+            const header = worksheet.getRow(1).getCell(i).value;
+            rowData[header] = cell.value.result ?? cell.value.text ?? cell.value; //If it's a formula or a hyperlink, filter the value out
+        }
+        jsonData.push(rowData);
+    });
+    jsonData.shift()
+
+    return jsonData;
+}
+
+module.exports = { convertJSONtoCSV, appendEntryToCSV, readJsonFile, readJsonFromSheet };

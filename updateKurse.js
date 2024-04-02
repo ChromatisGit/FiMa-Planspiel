@@ -1,48 +1,9 @@
-const ExcelJS = require('exceljs');
-const fs = require('fs');
+const fs = require('fs').promises;
 const cheerio = require('cheerio');
 const { format } = require('date-fns');
-import { convertJSONtoCSV } from './fileManager.js';
-import { fetchDataWithRetry } from './fetchManager.js';
-import { toNumber } from './dataTransformer.js';
-
-async function readJsonFromSheet(filePath, sheetName, startColumn, endColumn) {
-    const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile(filePath);
-
-    const worksheet = workbook.getWorksheet(sheetName);
-    if (!worksheet) {
-        throw new Error(`Sheet "${sheetName}" not found.`);
-    }
-
-    const jsonData = [];
-
-    worksheet.eachRow({ includeEmpty: false }, (row) => {
-        const rowData = {};
-        for (let i = startColumn; i <= endColumn; i++) {
-            const cell = row.getCell(i);
-            const header = worksheet.getRow(1).getCell(i).value;
-            rowData[header] = cell.value.result ?? cell.value.text ?? cell.value; //If it's a formula or a hyperlink, filter the value out
-        }
-        jsonData.push(rowData);
-    });
-    jsonData.shift()
-
-    return jsonData;
-}
-
-function calcLetzterZinstermin(zinszahlungenProJahr, ersteZinszahlung, heute) {
-    var monateSeitZinszahlung = (heute.getFullYear() - ersteZinszahlung.getFullYear()) * 12;
-    monateSeitZinszahlung += heute.getMonth() - ersteZinszahlung.getMonth();
-    monateSeitZinszahlung += (heute.getDate() >= ersteZinszahlung.getDate()) ? 0 : -1;
-
-    var anzahlZinszahlungen = Math.floor(monateSeitZinszahlung / (12 / zinszahlungenProJahr));
-
-    var letzteZinszahlung = new Date(ersteZinszahlung);
-    letzteZinszahlung.setMonth(letzteZinszahlung.getMonth() + Math.floor(anzahlZinszahlungen * (12 / zinszahlungenProJahr)));
-
-    return {anzahlZinszahlungen, letzteZinszahlung};
-}
+const { convertJSONtoCSV, readJsonFromSheet } = require('./fileManager.js');
+const { fetchDataWithRetry } = require('./fetchManager.js');
+const { toNumber, calcLetzterZinstermin } = require('./dataTransformer.js');
 
 const BoersenCodeMap = {
     'Berlin': 'BER',
@@ -58,7 +19,8 @@ const BoersenCodeMap = {
     'Gettex': 'BMN',
     'Ste Generale': 'SCGP',
     'Wien': 'WIEN',
-    'Quotrix': 'XQTX'
+    'Quotrix': 'XQTX',
+    'BNP Zuerich': 'PAR'
 }
 
 async function getAktuellenKurs(anleihe, date) {
@@ -110,13 +72,7 @@ async function getUnsereAnleihen() {
     }
 
     const csv = convertJSONtoCSV(table, ['Unternehmensname', 'Branche des Hauptkonzern', 'Coupon', 'Aktueller Kurs', ' ', 'Kaufpreis', 'Kaufkurs', 'Kaufdatum', 'Anteile', 'Stückelung','Letzte Zinszahlung', 'Anzahl Zinszahlungen'])
-    fs.writeFile('data/unsereAnleihen.csv', csv, (err) => {
-        if (err) {
-            console.error('Error writing file:', err);
-        } else {
-            console.log('File written successfully.');
-        }
-    })
+    fs.writeFile('data/unsereAnleihen.csv', csv)
 }
 
 getUnsereAnleihen()

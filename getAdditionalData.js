@@ -1,8 +1,8 @@
 const cheerio = require('cheerio');
 const fs = require('fs').promises;
 const path = require('path');
-import { convertJSONtoCSV, readJsonFile } from './fileManager.js';
-import { toNumber } from './dataTransformer.js';
+const { convertJSONtoCSV, readJsonFile } = require('./fileManager.js');
+const { toNumber } = require('./dataTransformer.js');
 
 function findAttribute($, key) {
     const targetRow = $(`td:contains("${key}")`);

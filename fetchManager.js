@@ -1,4 +1,4 @@
-export async function fetchDataWithRetry(url, options, retries = 0) {
+async function fetchDataWithRetry(url, options, retries = 0) {
     try {
         const response = await fetch(url, options);
 
@@ -17,3 +17,5 @@ export async function fetchDataWithRetry(url, options, retries = 0) {
         throw error;
     }
 }
+
+module.exports = { fetchDataWithRetry };
