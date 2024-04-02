@@ -43,7 +43,7 @@ async function readJsonFromSheet(filePath, sheetName, startColumn, endColumn) {
         for (let i = startColumn; i <= endColumn; i++) {
             const cell = row.getCell(i);
             const header = worksheet.getRow(1).getCell(i).value;
-            rowData[header] = cell.value.result ?? cell.value.text ?? cell.value;
+            rowData[header] = cell.value.result ?? cell.value.text ?? cell.value; //If it's a formula or a hyperlink, filter the value out
         }
         jsonData.push(rowData);
     });
@@ -124,13 +124,7 @@ async function getAktuellenKurs(anleihe, date) {
         return null
     }
 
-    const res = toNumber($('td').eq(2).text().trim()) / 100;
-
-    if(isNaN(res)) {
-        console.log($.html())
-    }
-
-    return res
+    return toNumber($('td').eq(2).text().trim()) / 100
 }
 
 async function getUnsereAnleihen() {
