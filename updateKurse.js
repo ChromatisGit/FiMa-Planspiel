@@ -20,7 +20,8 @@ const BoersenCodeMap = {
     'Ste Generale': 'SCGP',
     'Wien': 'WIEN',
     'Quotrix': 'XQTX',
-    'BNP Zuerich': 'PAR'
+    'BNP Zuerich': 'PAR',
+    'Amsterdam': 'ASX'
 }
 
 async function getAktuellenKurs(anleihe, date) {
@@ -34,7 +35,7 @@ async function getAktuellenKurs(anleihe, date) {
     const from = format(currDate, "yyyy-MM-dd")
     const url = `https://www.finanzen.net/Ajax/BondController_HistoricPriceList/${id}/${code}/${from}_${to}`
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise(resolve => setTimeout(resolve, 500))
     const body = await fetchDataWithRetry(url, { method: 'POST' });
     const $ = cheerio.load(body);
 
