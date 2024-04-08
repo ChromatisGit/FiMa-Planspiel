@@ -51,8 +51,8 @@ async function processAnleihen() {
     })
 
 
-    const columnNames = ['Kaufdatum', 'Unternehmensname', 'Branche des Hauptkonzern', 'Anteile', 'Stückelung', 'Kaufkurs', 'Coupon', 'Zinszahlungen pro Jahr', 'Letzter Zinstermin', 'Land', 'Börse', 'ISIN', 'Quelle', 'Kaufbar', 'Bereits Gekauft']
-    const keyNames = ['kaufdatum', 'name', 'branche', 'anteile', 'stueckelung', 'kurs', 'coupon', 'anzahlZinstermine', 'zinstermin', 'land', 'boerse', 'id', 'link', 'kaufbar','bereitsGekauft']
+    const columnNames = ['Kaufdatum', 'Unternehmensname', 'Branche des Hauptkonzern', 'Anteile', 'Stückelung', 'Kaufkurs', 'Coupon', 'Zinszahlungen pro Jahr', 'Letzter Zinstermin', 'Land', 'Börse', 'ISIN', 'Quelle', 'Kaufbar', 'Bereits Gekauft', 'Fälligkeit']
+    const keyNames = ['kaufdatum', 'name', 'branche', 'anteile', 'stueckelung', 'kurs', 'coupon', 'anzahlZinstermine', 'zinstermin', 'land', 'boerse', 'id', 'link', 'kaufbar','bereitsGekauft', 'faelligkeit']
     fs.writeFile(outputPath, columnNames.join(',')+ '\n')
 
     let processedCount = 1;
@@ -73,7 +73,7 @@ async function processAnleihen() {
         anleihe.zinstermin = letzteZinszahlung;
         anleihe.anteile = Math.ceil(investiertesKapital / anleihe.stueckelung)
 
-        const gekaufteAnleihe = currentAnleihen.find(a => a.ISIN === anleihe.id)
+        const gekaufteAnleihe = currentAnleihen.find(a => a.name === anleihe.name)
 
         if(gekaufteAnleihe === undefined) {
             console.log(`Processed entry ${processedCount}`);

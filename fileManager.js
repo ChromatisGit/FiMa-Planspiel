@@ -2,8 +2,8 @@ const ExcelJS = require('exceljs');
 const fs = require('fs').promises;
 const { toCSVString } = require('./dataTransformer.js');
 
-function convertJSONtoCSV(obj, keys) {
-    const csvRows = obj.map((item) => {
+function convertJSONtoCSV(table, keys) {
+    const csvRows = table.map((item) => {
         return keys
         .map(key => toCSVString(item[key]))
         .join(',');

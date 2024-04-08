@@ -1,6 +1,6 @@
 const fs = require('fs').promises;
 const cheerio = require('cheerio');
-const { format } = require('date-fns');
+const { format, isSameDay } = require('date-fns');
 const { convertJSONtoCSV, readJsonFromSheet } = require('./fileManager.js');
 const { fetchDataWithRetry } = require('./fetchManager.js');
 const { toNumber, calcLetzterZinstermin } = require('./dataTransformer.js');
@@ -58,7 +58,7 @@ async function getUnsereAnleihen() {
     let processedCount = 1;
 
     for (const row of table) {
-        if (today === new Date(row['Kaufdatum'])) {
+        if (isSameDay(today, row['Kaufdatum'])) {
             row['Aktueller Kurs'] = row['Kaufkurs'];
         }
         else {
