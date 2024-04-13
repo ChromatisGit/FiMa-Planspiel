@@ -5,16 +5,9 @@ async function fetchDataWithRetry(url, options, retries = 0) {
 
         if (response.ok) {
             return await response.text();
-        } else if (response.status === 403) {
-            console.error('Access Denied. Retrying...');
-            if(retries < maxRetries) {
-                await new Promise(resolve => setTimeout(resolve, 3000));
-            }
-            else {
-                console.log('Waiting 1 minute...')
-                await new Promise(resolve => setTimeout(resolve, 60000));
-                retries = 0;
-            }
+        } else if (response.status === 403 && retries < maxRetries) {
+            console.error('Access Denied. Retrying in a minute...');
+            await new Promise(resolve => setTimeout(resolve, 60000));
             return fetchDataWithRetry(url, options, retries + 1);
         } else {
             console.error('Error:', response.status);
