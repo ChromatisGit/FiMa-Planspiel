@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 const fs = require('fs').promises;
+const { parse } = require('date-fns');
 const path = require('path');
 const { convertJSONtoCSV, readJsonFile } = require('./fileManager.js');
 const { toNumber } = require('./dataTransformer.js');
@@ -53,6 +54,7 @@ async function getAdditionalData(anleihe) {
 }
 
 async function updateStorage({ input, storage, branchenPath, missingBranchenPath, storagePath }) {
+    const endOfProject = new Date(2024,7,1)
     const missingBranchen = [];
     const branchen = await readJsonFile(branchenPath)
     let updatedStorage = false;
@@ -84,6 +86,14 @@ async function updateStorage({ input, storage, branchenPath, missingBranchenPath
 
         anleihe = await getAdditionalData(anleihe);
         if (anleihe === null) {
+            continue;
+        }
+
+        if (parse(anleihe.faelligkeit, 'dd-MM-yyyy', new Date()) < endOfProject ) {
+            anleihe.ignorieren = true
+            storage[anleihe.id] = anleihe;
+            updatedStorage = true;
+            console.log(`${entryCount} has been added to storage!`)
             continue;
         }
 

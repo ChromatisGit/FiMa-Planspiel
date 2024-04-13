@@ -38,22 +38,23 @@ async function findBestBoerse(url, date) {
 async function processAnleihen() {
     const inputPath = 'data/fetchedAnleihenWithData.json';
     const outputPath = 'data/neueAnleihen.csv';
+    const wechselkursePath = 'data/currentWechselkurse.json';
     const sheetPath = 'FiMa.xlsx'
 
     const investiertesKapital = 2000
     const today = new Date()
 
     const input = await readJsonFile(inputPath);
+    const wechselkurse = await readJsonFile(wechselkursePath);
 
     let currentAnleihen = await readJsonFromSheet(sheetPath, 'Anleihenkäufe', 1, 16)
     currentAnleihen = currentAnleihen.filter((row) => {
         return row['Im Besitz']
     })
 
-
-    const columnNames = ['Kaufdatum', 'Unternehmensname', 'Branche des Hauptkonzern', 'Anteile', 'Stückelung', 'Kaufkurs', 'Coupon', 'Zinszahlungen pro Jahr', 'Letzter Zinstermin', 'Land', 'Börse', 'ISIN', 'Quelle', 'Kaufbar', 'Bereits Gekauft', 'Fälligkeit']
-    const keyNames = ['kaufdatum', 'name', 'branche', 'anteile', 'stueckelung', 'kurs', 'coupon', 'anzahlZinstermine', 'zinstermin', 'land', 'boerse', 'id', 'link', 'kaufbar','bereitsGekauft', 'faelligkeit']
-    fs.writeFile(outputPath, columnNames.join(',')+ '\n')
+    const columnNames = ['Kaufdatum', 'Unternehmensname', 'Branche des Hauptkonzern', 'Anteile', 'Stückelung', 'Kaufkurs', 'Coupon', 'Wechselkurs am Kauftag', 'Währung', 'Zinszahlungen pro Jahr', 'Letzter Zinstermin', 'Land', 'Börse', 'ISIN', 'Quelle', 'Kaufbar', 'Bereits Gekauft']
+    const keyNames = ['kaufdatum', 'name', 'branche', 'anteile', 'stueckelung', 'kurs', 'coupon', 'wechselkurs', 'waehrung', 'anzahlZinstermine', 'zinstermin', 'land', 'boerse', 'id', 'link', 'kaufbar', 'bereitsGekauft']
+    fs.writeFile(outputPath, columnNames.join(',') + '\n')
 
     let processedCount = 1;
 
@@ -61,7 +62,7 @@ async function processAnleihen() {
         const { kurs, boerse } = await findBestBoerse(anleihe.link, today)
 
         if (boerse === undefined) {
-            console.log(`Currently no active trades for ${anleihe.name} (${anleihe.link})`)
+            console.log(`Derzeit keine aktiven Trades für ${anleihe.name} (${anleihe.link})`)
             continue;
         }
 
@@ -69,22 +70,23 @@ async function processAnleihen() {
         anleihe.boerse = boerse;
         anleihe.kaufdatum = today
         anleihe.kaufbar = true
-        const {letzteZinszahlung} = calcLetzterZinstermin(anleihe.anzahlZinstermine, parse(anleihe.zinstermin, 'dd-MM-yyyy', new Date()), today)
-        anleihe.zinstermin = letzteZinszahlung;
+        anleihe.zinstermin = calcLetzterZinstermin(anleihe.anzahlZinstermine, parse(anleihe.zinstermin, 'dd-MM-yyyy', new Date()), today);
         anleihe.anteile = Math.ceil(investiertesKapital / anleihe.stueckelung)
+        anleihe.wechselkurs = wechselkurse[anleihe.waehrung];
 
-        const gekaufteAnleihe = currentAnleihen.find(a => a.name === anleihe.name)
+        const gekaufteAnleihe = currentAnleihen.find(a => a.Unternehmensname === anleihe.name)
 
-        if(gekaufteAnleihe === undefined) {
-            console.log(`Processed entry ${processedCount}`);
+
+        if (gekaufteAnleihe === undefined) {
+            console.log(`Neue Anleihe gefunden. ${processedCount}`);
             processedCount++;
             appendEntryToCSV(outputPath, anleihe, keyNames)
             continue;
         }
 
-        if(gekaufteAnleihe['Börse'] !== anleihe.boerse) {
+        if (gekaufteAnleihe['Börse'] !== anleihe.boerse) {
             anleihe.bereitsGekauft = true;
-            console.log(`Processed entry ${processedCount}`);
+            console.log(`Bessere Börse für Anleihe gefunden. ${processedCount}`);
             processedCount++;
         }
     }

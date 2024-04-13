@@ -1,8 +1,8 @@
 const cheerio = require('cheerio');
 const fs = require('fs').promises;
 
-const MIN_ZINS = 6;
-const CURRENCY = 'EUR';
+const MIN_ZINS = 10;
+const CURRENCY = 'USD';
 
 const url = `https://www.finanzen.net/anleihen/suche?anwi=&abti=&aw=${CURRENCY}%2C&arendv=&arendb=&arlv=&arlb=&arlfv=&arlfb=&absti=&aemvv=&aemvb=&aei=&al=&alion=&anr=a&arv=&arb=&arak=a&arad=a&aboe=al&anmk=j&astkv=&astkb=5000&aakv=&aakb=&aums=&aspd=&anem=n&akv=${MIN_ZINS}&akb=&akt=&aszv=&aszb=&azfv=&azfb=&adv=&adb=&amdv=&amdb=&s=1&pkSortT=8&pkSortR=2`
 
@@ -28,6 +28,7 @@ async function getAnleihen() {
             anleihe.name = firstTd.find('div:first').text().trim();
             anleihe.id = firstTd.find('div:eq(1) a').text().trim();
             anleihe.link = `https://www.finanzen.net${firstTd.find('div:eq(1) a').attr('href')}`;
+            anleihe.waehrung = CURRENCY;
             anleihen.push(anleihe)
         })
         page++;

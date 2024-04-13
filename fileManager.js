@@ -51,7 +51,12 @@ async function readJsonFromSheet(filePath, sheetName, startColumn, endColumn) {
         for (let i = startColumn; i <= endColumn; i++) {
             const cell = row.getCell(i);
             const header = worksheet.getRow(1).getCell(i).value;
-            rowData[header] = cell.value.result ?? cell.value.text ?? cell.value; //If it's a formula or a hyperlink, filter the value out
+            if (cell.value) {
+                //If it's a formula or a hyperlink, filter the value out
+                rowData[header] = cell.value.result ?? cell.value.text ?? cell.value;
+                continue;
+            }
+            rowData[header] = "";
         }
         jsonData.push(rowData);
     });
