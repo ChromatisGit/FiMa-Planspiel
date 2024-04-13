@@ -14,7 +14,7 @@ function calcLetzterZinstermin(zinszahlungenProJahr, ersteZinszahlung, heute) {
     var letzteZinszahlung = new Date(ersteZinszahlung);
     letzteZinszahlung.setMonth(letzteZinszahlung.getMonth() + Math.floor(anzahlZinszahlungen * (12 / zinszahlungenProJahr)));
 
-    return {anzahlZinszahlungen, letzteZinszahlung};
+    return format(letzteZinszahlung, 'dd-MM-yyyy');
 }
 
 function toCSVString(val) {
