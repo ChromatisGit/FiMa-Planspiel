@@ -1,52 +1,8 @@
 const fs = require('fs').promises;
-const cheerio = require('cheerio');
-const { format, isSameDay } = require('date-fns');
+const { isSameDay } = require('date-fns');
 const { appendEntryToCSV, readJsonFromSheet, readJsonFile } = require('./fileManager.js');
-const { fetchDataWithRetry } = require('./fetchManager.js');
-const { toNumber, calcLetzterZinstermin } = require('./dataTransformer.js');
-
-const BoersenCodeMap = {
-    'Berlin': 'BER',
-    'Düsseldorf': 'DUS',
-    'Frankfurt': 'FSE',
-    'Hamburg': 'HAM',
-    'Hannover': 'HAN',
-    'Lang & Schwarz': 'L&S',
-    'München': 'MUN',
-    'Stuttgart': 'STU',
-    'Tradegate': 'TGT',
-    'Baader Bank': 'BAE',
-    'Gettex': 'BMN',
-    'Ste Generale': 'SCGP',
-    'Wien': 'WIEN',
-    'Quotrix': 'XQTX',
-    'BNP Zuerich': 'PAR',
-    'Amsterdam': 'ASX'
-}
-
-async function getAktuellenKurs(anleihe, date) {
-    const currDate = new Date(date)
-    const prefixLength = 'https://www.finanzen.net/anleihen/'.length;
-    const suffixLength = '-anleihe'.length;
-    const id = anleihe['Quelle'].slice(prefixLength, -suffixLength)
-    const code = BoersenCodeMap[anleihe['Börse']];
-    const to = format(currDate, "yyyy-MM-dd")
-    currDate.setDate(currDate.getDate() - 7)
-    const from = format(currDate, "yyyy-MM-dd")
-    const url = `https://www.finanzen.net/Ajax/BondController_HistoricPriceList/${id}/${code}/${from}_${to}`
-
-    await new Promise(resolve => setTimeout(resolve, 500))
-    const body = await fetchDataWithRetry(url, { method: 'POST' });
-    const $ = cheerio.load(body);
-
-    if ($('p').first().text() === 'Keine Daten verfügbar') {
-        console.log(`Couldn't find any data for ${anleihe['Unternehmensname']} on ${date} for ${anleihe['Börse']}.`)
-        console.log($.html())
-        return null
-    }
-
-    return toNumber($('td').eq(2).text().trim()) / 100
-}
+const { calcLetzterZinstermin } = require('./dataTransformer.js');
+const { getAktuellenKurs } = require('./requestManager.js');
 
 async function getUnsereAnleihen(appendFile) {
     const wechselkursePath = 'data/currentWechselkurse.json';
@@ -86,7 +42,7 @@ async function getUnsereAnleihen(appendFile) {
             row['Aktueller Kurs'] = row['Kaufkurs'];
         }
         else {
-            row['Aktueller Kurs'] = await getAktuellenKurs(row, today);
+            row['Aktueller Kurs'] = await getAktuellenKurs({anleihe: row, date: today});
         }
         row['Letzte Zinszahlung'] = calcLetzterZinstermin(row['Zinszahlungen pro Jahr'], row['Letzter Zinstermin'], today);
 

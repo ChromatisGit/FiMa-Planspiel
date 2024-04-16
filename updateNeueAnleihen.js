@@ -1,26 +1,11 @@
-const { fetchDataWithRetry } = require('./fetchManager.js');
 const { readJsonFile, readJsonFromSheet, appendEntryToCSV } = require('./fileManager.js');
-const { calcLetzterZinstermin, toNumber } = require('./dataTransformer.js');
+const { calcLetzterZinstermin } = require('./dataTransformer.js');
+const { getBoersen } = require('./requestManager.js');
 const { parse } = require('date-fns');
 const fs = require('fs').promises;
-const cheerio = require('cheerio');
 
 async function findBestBoerse(url, date) {
-    const prefixLength = 'https://www.finanzen.net/anleihen/'.length;
-    const link = 'https://www.finanzen.net/anleihen/boersenplaetze/' + url.slice(prefixLength)
-
-    const body = await fetchDataWithRetry(link);
-    const $ = cheerio.load(body);
-
-    const boersenKurse = []
-
-    const targetTable = $(`th:contains("Börse")`);
-    targetTable.closest('thead').next().find('tr').each((_, row) => {
-        const kurs = toNumber($(row).find('td:eq(1)').text().trim().slice(0, -2));
-        const aufrufDatum = parse($(row).find('td:eq(7)').text().trim(), 'dd.MM.yyyy', new Date());
-        const boerse = $(row).find('td:first a').text().trim()
-        boersenKurse.push({ kurs, aufrufDatum, boerse })
-    })
+    const boersenKurse = await getBoersen(url)
 
     const datumLimit = new Date(date)
     datumLimit.setDate(datumLimit.getDate() - 3)
