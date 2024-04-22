@@ -2,7 +2,7 @@ const { parse } = require('date-fns');
 const { calcLetzterZinstermin } = require('./dataTransformer.js');
 const { appendEntryToCSV, readJsonFromSheet } = require('./fileManager.js');
 
-async function getZinszahlungen({startDate, endDate}) {
+async function updateZinszahlungen({startDate, endDate}) {
     const outputPath = 'data/zinszahlungen.csv';
 
     let table = await readJsonFromSheet('FiMa.xlsx', 'Anleihenkäufe', 1, 19)
@@ -40,7 +40,6 @@ async function getZinszahlungen({startDate, endDate}) {
     }
 }
 
-getZinszahlungen({
-    startDate: new Date(2024,2,29),
-    endDate: new Date(2024,3,17)
-})
+module.exports = {
+    updateZinszahlungen
+};

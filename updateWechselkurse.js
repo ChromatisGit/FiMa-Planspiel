@@ -1,9 +1,8 @@
 const fs = require('fs').promises;
 const { getDollarWechselkurs } = require('./requestManager.js');
 
-async function updateWechselkurse() {
-    const today = new Date();
-    const usd = await getDollarWechselkurs(today);
+async function updateWechselkurse(date) {
+    const usd = await getDollarWechselkurs(date);
 
     const wechselkurse = {
         "EUR": 1,
@@ -14,4 +13,6 @@ async function updateWechselkurse() {
     console.log('Exported Wechselkurse')
 }
 
-updateWechselkurse()
+module.exports = {
+    updateWechselkurse
+};

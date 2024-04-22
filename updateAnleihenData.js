@@ -65,7 +65,7 @@ async function updateStorage({ input, storage, branchenPath, missingBranchenPath
     }
 }
 
-async function processAnleihen() {
+async function updateAnleihenData() {
     const inputPath = path.join(__dirname, 'data/fetchedAnleihen.json');
     const outputPath = path.join(__dirname, 'data/fetchedAnleihenWithData.json');
     const storagePath = path.join(__dirname, 'data/storage/anleihenDaten.json');
@@ -87,4 +87,6 @@ async function processAnleihen() {
     fs.writeFile(outputPath, JSON.stringify(output, undefined, 2));
 }
 
-processAnleihen()
+module.exports = {
+    updateAnleihenData
+};

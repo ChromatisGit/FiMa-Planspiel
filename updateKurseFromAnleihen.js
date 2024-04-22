@@ -20,7 +20,7 @@ async function findBestBoerse(url, date) {
     return bestBoerse;
 }
 
-async function processAnleihen() {
+async function updateKurseFromAnleihen() {
     const inputPath = 'data/fetchedAnleihenWithData.json';
     const outputPath = 'data/neueAnleihen.csv';
     const wechselkursePath = 'data/currentWechselkurse.json';
@@ -77,4 +77,6 @@ async function processAnleihen() {
     }
 }
 
-processAnleihen()
+module.exports = {
+    updateKurseFromAnleihen
+};

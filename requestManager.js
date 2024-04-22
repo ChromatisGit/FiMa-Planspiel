@@ -1,5 +1,5 @@
 const cheerio = require('cheerio');
-const { format } = require('date-fns');
+const { format, parse } = require('date-fns');
 const { toNumber } = require('./dataTransformer.js');
 
 async function fetchDataWithRetry(url, options, retries = 0) {
