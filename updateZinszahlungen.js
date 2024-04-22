@@ -41,6 +41,6 @@ async function getZinszahlungen({startDate, endDate}) {
 }
 
 getZinszahlungen({
-    startDate: new Date(2024,2,28),
-    endDate: new Date(2024,3,13)
+    startDate: new Date(2024,2,29),
+    endDate: new Date(2024,3,17)
 })
