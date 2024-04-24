@@ -1,5 +1,5 @@
 const cheerio = require('cheerio');
-const { format } = require('date-fns');
+const { format, parse } = require('date-fns');
 const { toNumber } = require('./dataTransformer.js');
 
 async function fetchDataWithRetry(url, options, retries = 0) {
@@ -164,8 +164,17 @@ async function getAdditionalData(anleihe) {
     return anleihe;
 }
 
-async function getWechselkurs() {
-    //TODO
+async function getDollarWechselkurs(date) {
+    const currDate = new Date(date)
+    const to = format(currDate, "yyyy-MM-dd");
+    currDate.setDate(currDate.getDate() - 7);
+    const from = format(currDate, "yyyy-MM-dd");
+
+    const url = `https://www.finanzen.net/Ajax/ExchangeRateController_HistoricPriceList/dollarkurs/${from}_${to}`
+    const body = await fetchDataWithRetry(url, { method: 'POST' });
+    const $ = cheerio.load(body);
+
+    return toNumber($('td').eq(1).text().trim());
 }
 
 module.exports = {
@@ -173,5 +182,5 @@ module.exports = {
     getAktuellenKurs,
     getBoersen,
     getNeueAnleihen,
-    getWechselkurs
+    getDollarWechselkurs
 };

@@ -4,10 +4,10 @@ const { appendEntryToCSV, readJsonFromSheet, readJsonFile } = require('./fileMan
 const { calcLetzterZinstermin } = require('./dataTransformer.js');
 const { getAktuellenKurs } = require('./requestManager.js');
 
-async function getUnsereAnleihen(appendFile) {
+async function updateKurseUnsereAnleihen(date) {
+    const appendFile = false;
     const wechselkursePath = 'data/currentWechselkurse.json';
     const outputPath = 'data/unsereAnleihen.csv';
-    const today = new Date()
 
     const wechselkurse = await readJsonFile(wechselkursePath);
 
@@ -38,13 +38,13 @@ async function getUnsereAnleihen(appendFile) {
             continue;
         }
 
-        if (isSameDay(today, row['Kaufdatum'])) {
+        if (isSameDay(date, row['Kaufdatum'])) {
             row['Aktueller Kurs'] = row['Kaufkurs'];
         }
         else {
-            row['Aktueller Kurs'] = await getAktuellenKurs({anleihe: row, date: today});
+            row['Aktueller Kurs'] = await getAktuellenKurs({anleihe: row, date});
         }
-        row['Letzte Zinszahlung'] = calcLetzterZinstermin(row['Zinszahlungen pro Jahr'], row['Letzter Zinstermin'], today);
+        row['Letzte Zinszahlung'] = calcLetzterZinstermin(row['Zinszahlungen pro Jahr'], row['Letzter Zinstermin'], date);
 
         row['Aktueller Wechselkurs'] = wechselkurse[row['Währung']]
 
@@ -55,4 +55,6 @@ async function getUnsereAnleihen(appendFile) {
     }
 }
 
-getUnsereAnleihen(false)
+module.exports = {
+    updateKurseUnsereAnleihen
+};
