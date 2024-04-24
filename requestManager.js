@@ -58,7 +58,8 @@ async function getAktuellenKurs({anleihe, date}) {
     const $ = cheerio.load(body);
 
     if ($('p').first().text() === 'Keine Daten verfügbar') {
-        console.log(`Couldn't find any data for ${anleihe['Unternehmensname']} on ${date} for ${anleihe['Börse']}.`);
+        console.log(`Couldn't find any data for ${anleihe['Unternehmensname']} for ${anleihe['Börse']}.`);
+        console.log(url);
         console.log($.html());
         return null;
     }

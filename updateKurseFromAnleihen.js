@@ -32,7 +32,7 @@ async function updateKurseFromAnleihen() {
     const input = await readJsonFile(inputPath);
     const wechselkurse = await readJsonFile(wechselkursePath);
 
-    let currentAnleihen = await readJsonFromSheet(sheetPath, 'Anleihenkäufe', 1, 16)
+    let currentAnleihen = await readJsonFromSheet(sheetPath, 'Anleihenkäufe', 1, 19)
     currentAnleihen = currentAnleihen.filter((row) => {
         return row['Im Besitz']
     })
@@ -73,6 +73,7 @@ async function updateKurseFromAnleihen() {
             anleihe.bereitsGekauft = true;
             console.log(`Bessere Börse für Anleihe gefunden. ${processedCount}`);
             processedCount++;
+            continue;
         }
     }
 }
