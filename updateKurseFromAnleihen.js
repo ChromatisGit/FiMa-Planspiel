@@ -5,7 +5,13 @@ const { parse } = require('date-fns');
 const fs = require('fs').promises;
 
 async function findBestBoerse(url, date) {
-    const boersenKurse = await getBoersen(url)
+    let boersenKurse;
+    try {
+    boersenKurse = await getBoersen(url)
+    }
+    catch {
+        return { kurs: undefined, boerse: undefined};
+    }
 
     const datumLimit = new Date(date)
     datumLimit.setDate(datumLimit.getDate() - 3)
@@ -32,7 +38,7 @@ async function updateKurseFromAnleihen() {
     const input = await readJsonFile(inputPath);
     const wechselkurse = await readJsonFile(wechselkursePath);
 
-    let currentAnleihen = await readJsonFromSheet(sheetPath, 'Anleihenkäufe', 1, 19)
+    let currentAnleihen = await readJsonFromSheet(sheetPath, 'Anleihen(ver)käufe', 1, 19)
     currentAnleihen = currentAnleihen.filter((row) => {
         return row['Im Besitz']
     })
