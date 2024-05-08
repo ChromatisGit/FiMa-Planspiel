@@ -34,12 +34,13 @@ const BoersenCodeMap = {
     'Stuttgart': 'STU',
     'Tradegate': 'TGT',
     'Baader Bank': 'BAE',
-    'Gettex': 'BMN',
+    'gettex': 'BMN',
     'Ste Generale': 'SCGP',
     'Wien': 'WIEN',
     'Quotrix': 'XQTX',
     'BNP Zuerich': 'PAR',
-    'Amsterdam': 'ASX'
+    'Amsterdam': 'ASX',
+    'ZKB': 'ZKK'
 }
 
 async function getAktuellenKurs({anleihe, date}) {
