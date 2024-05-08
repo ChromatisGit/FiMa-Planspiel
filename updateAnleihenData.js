@@ -6,7 +6,7 @@ const { getAdditionalData } = require('./requestManager.js');
 
 
 async function updateStorage({ input, storage, branchenPath, missingBranchenPath, storagePath }) {
-    const endOfProject = new Date(2024,7,1)
+    const endOfProject = new Date(2024,6,12)
     const missingBranchen = [];
     const branchen = await readJsonFile(branchenPath)
     let updatedStorage = false;
@@ -41,7 +41,7 @@ async function updateStorage({ input, storage, branchenPath, missingBranchenPath
             continue;
         }
 
-        if (parse(anleihe.faelligkeit, 'dd-MM-yyyy', new Date()) < endOfProject ) {
+        if (anleihe.faelligkeit && parse(anleihe.faelligkeit, 'dd-MM-yyyy', new Date()) < endOfProject ) {
             anleihe.ignorieren = true
             storage[anleihe.id] = anleihe;
             updatedStorage = true;
