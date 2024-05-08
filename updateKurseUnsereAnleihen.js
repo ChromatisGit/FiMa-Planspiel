@@ -11,12 +11,12 @@ async function updateKurseUnsereAnleihen(date) {
 
     const wechselkurse = await readJsonFile(wechselkursePath);
 
-    let table = await readJsonFromSheet('FiMa.xlsx', 'Anleihenkäufe', 1, 19)
+    let table = await readJsonFromSheet('FiMa.xlsx', 'Anleihen(ver)käufe', 1, 19)
     table = table.filter((row) => {
         return row['Im Besitz']
     })
 
-    const keyNames = ['Unternehmensname', 'Branche des Hauptkonzern', 'Coupon', 'Aktueller Kurs', 'Dirty Kaufpreis', 'Kaufkurs', 'Wechselkurs am Kauftag', 'Aktueller Wechselkurs', 'Währung', 'Kaufdatum', 'Anteile', 'Stückelung', 'Letzte Zinszahlung', 'Zinszahlungen pro Jahr', 'Stückzinsen', 'ISIN', 'Quelle']
+    const keyNames = ['Unternehmensname', 'Branche des Hauptkonzern', 'Coupon', 'Aktueller Kurs', 'Dirty Kaufpreis', 'Kaufkurs', 'Wechselkurs am Kauftag', 'Aktueller Wechselkurs', 'Währung', 'Kaufdatum', 'Anteile', 'Stückelung', 'Letzte Zinszahlung', 'Zinszahlungen pro Jahr', 'Stückzinsen', 'Börse', 'ISIN', 'Quelle']
 
     let rowCount = 0;
     if (appendFile) {
