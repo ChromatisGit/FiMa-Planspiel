@@ -1,6 +1,6 @@
 const fs = require('fs').promises;
-const { appendEntryToCSV, readJsonFromSheet } = require('./fileManager.js');
-const { getAktuellenKurs } = require('./requestManager.js');
+const { appendEntryToCSV, readJsonFromSheet } = require('../fileManager.js');
+const { getAktuellenKurs } = require('../requestManager.js');
 
 async function checkKaufkurse() {
     const outputPath = 'checkKaufkurse.csv';

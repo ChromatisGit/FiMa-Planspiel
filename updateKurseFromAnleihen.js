@@ -1,6 +1,7 @@
 const { readJsonFile, readJsonFromSheet, appendEntryToCSV } = require('./fileManager.js');
 const { calcLetzterZinstermin } = require('./dataTransformer.js');
 const { getBoersen } = require('./requestManager.js');
+const { removeDuplicatesFromAnleihen } = require('./removeDuplicatesFromAnleihen.js');
 const { parse } = require('date-fns');
 const fs = require('fs').promises;
 
@@ -36,7 +37,11 @@ async function updateKurseFromAnleihen() {
     const today = new Date()
 
     const input = await readJsonFile(inputPath);
-    const wechselkurse = await readJsonFile(wechselkursePath);
+    const usd = await getDollarWechselkurse(today);
+    const wechselkurse = {
+        "EUR": 1,
+        "USD": usd[0].kurs
+    }
 
     let currentAnleihen = await readJsonFromSheet(sheetPath, 'Anleihen(ver)käufe', 1, 19)
     currentAnleihen = currentAnleihen.filter((row) => {
@@ -82,6 +87,8 @@ async function updateKurseFromAnleihen() {
             continue;
         }
     }
+
+    removeDuplicatesFromAnleihen();
 }
 
 module.exports = {

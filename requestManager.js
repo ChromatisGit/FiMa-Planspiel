@@ -168,6 +168,7 @@ async function getAdditionalData(anleihe) {
 
 async function getDollarWechselkurse(fromDate, toDate = new Date(fromDate)) {
     //Get more dates to have fallback numbers for weekends and holidays
+    fromDate = new Date(fromDate);
     fromDate.setDate(fromDate.getDate() - 7);
     const from = format(fromDate, "yyyy-MM-dd");
     const to = format(toDate, "yyyy-MM-dd");

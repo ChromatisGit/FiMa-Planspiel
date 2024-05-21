@@ -1,15 +1,22 @@
 const fs = require('fs').promises;
-const { isSameDay } = require('date-fns');
+const { isSameDay, format } = require('date-fns');
 const { appendEntryToCSV, readJsonFromSheet, readJsonFile } = require('./fileManager.js');
 const { calcLetzterZinstermin } = require('./dataTransformer.js');
-const { getAktuellenKurs } = require('./requestManager.js');
+const { getAktuellenKurs, getDollarWechselkurse } = require('./requestManager.js');
 
 async function updateKurseUnsereAnleihen(date) {
-    const appendFile = false;
-    const wechselkursePath = 'data/currentWechselkurse.json';
     const outputPath = 'data/unsereAnleihen.csv';
+    const bufferPath = 'data/kurseAnleihenBuffer.json';
 
-    const wechselkurse = await readJsonFile(wechselkursePath);
+    let buffer = await readJsonFile(bufferPath);
+    if(!buffer || !isSameDay(new Date(buffer.date), date)) {
+        const usd = await getDollarWechselkurse(date);
+        buffer = {
+            date: format(date, "yyyy-MM-dd"),
+            usd: usd[0].kurs,
+            kurse: {}
+        }
+    }
 
     let table = await readJsonFromSheet('FiMa.xlsx', 'Anleihen(ver)käufe', 1, 19)
     table = table.filter((row) => {
@@ -18,41 +25,29 @@ async function updateKurseUnsereAnleihen(date) {
 
     const keyNames = ['Unternehmensname', 'Branche des Hauptkonzern', 'Coupon', 'Aktueller Kurs', 'Dirty Kaufpreis', 'Kaufkurs', 'Wechselkurs am Kauftag', 'Aktueller Wechselkurs', 'Währung', 'Kaufdatum', 'Anteile', 'Stückelung', 'Letzte Zinszahlung', 'Zinszahlungen pro Jahr', 'Stückzinsen', 'Börse', 'ISIN', 'Quelle']
 
-    let rowCount = 0;
-    if (appendFile) {
-        fs.createReadStream(outputPath)
-            .pipe(csv())
-            .on('data', (row) => {
-                rowCount++;
-            })
-    }
-    else {
-        fs.writeFile(outputPath, keyNames.join(',')+ '\n')
-    }
+    fs.writeFile(outputPath, keyNames.join(',')+ '\n')
 
     let processedCount = 1;
-
     for (const row of table) {
-        if (rowCount > 0) {
-            rowCount--;
-            continue;
-        }
-
-        if (isSameDay(date, row['Kaufdatum'])) {
-            row['Aktueller Kurs'] = row['Kaufkurs'];
+        if(buffer.kurse[row['ISIN']]) {
+            row['Aktueller Kurs'] = buffer.kurse[row['ISIN']];
         }
         else {
-            row['Aktueller Kurs'] = await getAktuellenKurs({anleihe: row, date});
-        }
-        row['Letzte Zinszahlung'] = calcLetzterZinstermin(row['Zinszahlungen pro Jahr'], row['Letzter Zinstermin'], date);
+            row['Aktueller Kurs'] = isSameDay(date, row['Kaufdatum'])? row['Kaufkurs'] : await getAktuellenKurs({anleihe: row, date});
+            buffer.kurse[row['ISIN']] = row['Aktueller Kurs'];
 
-        row['Aktueller Wechselkurs'] = wechselkurse[row['Währung']]
+            console.log(buffer.kurse[row['ISIN']])
+        }
+
+        row['Letzte Zinszahlung'] = calcLetzterZinstermin(row['Zinszahlungen pro Jahr'], row['Letzter Zinstermin'], date);
+        row['Aktueller Wechselkurs'] = row['Währung'] === 'EUR' ? 1 : buffer.usd;
 
         appendEntryToCSV(outputPath, row, keyNames)
 
-        console.log(`Processed entry ${processedCount}`);
-        processedCount++;
+        console.log(`Processed entry ${processedCount++}`);
     }
+
+    fs.writeFile(bufferPath, JSON.stringify(buffer, null, 2))
 }
 
 module.exports = {
