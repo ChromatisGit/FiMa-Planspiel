@@ -20,7 +20,7 @@ function updateBranchenStorage() {
             console.log(`Added ${newEntriesAmount} to branchen.json!`);
         });
 }
-
+//TODO Wenn keine branche spalte da ist Fehlermeldung
 module.exports = {
     updateBranchenStorage
 };

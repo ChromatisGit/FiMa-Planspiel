@@ -1,11 +1,10 @@
 const { parse } = require('date-fns');
 const { calcLetzterZinstermin } = require('./dataTransformer.js');
-const { appendEntryToCSV, readJsonFromSheet, readJsonFile } = require('./fileManager.js');
+const { appendEntryToCSV, readJsonFromSheet } = require('./fileManager.js');
+const { getDollarWechselkurse } = require('./requestManager.js');
 
 async function updateZinszahlungen({startDate, endDate}) {
     const outputPath = 'data/zinszahlungen.csv';
-    const wechselkursePath = 'data/currentWechselkurse.json';
-    const wechselkurse = await readJsonFile(wechselkursePath);
 
     let table = await readJsonFromSheet('FiMa.xlsx', 'Anleihen(ver)käufe', 1, 19)
     table = table.filter((row) => {
@@ -15,16 +14,24 @@ async function updateZinszahlungen({startDate, endDate}) {
     const keyNames = ['Datum', 'Art', 'Unternehmensname', 'Wechselkurs', 'Währung', 'Anteile', 'Stückelung', 'Coupon', 'Zinszahlungen pro Jahr', 'ISIN']
     const newZinszahlungen = [];
 
+    const dollarWechselkurse = await getDollarWechselkurse(startDate, endDate)
+
     for (const row of table) {
         const letzteZinszahlung = parse(calcLetzterZinstermin(row['Zinszahlungen pro Jahr'], row['Letzter Zinstermin'], endDate), 'dd-MM-yyyy', new Date())
         if(letzteZinszahlung < startDate) {
             continue;
         }
 
-        row['Art'] = 'Zinsen'
+        row['Art'] = 'Zinsen';
+        row['Datum'] = letzteZinszahlung;
+        row['Wechselkurs'] = 1;
 
-        row['Datum'] = letzteZinszahlung
-        row['Wechselkurs'] = wechselkurse[row['Währung']];
+        if (row['Währung'] === 'USD') {
+            row['Wechselkurs'] = (dollarWechselkurse).find( entry => {
+                return row['Datum'] >= entry.date
+            }).kurs;
+        };
+
         newZinszahlungen.push(row);
     }
 

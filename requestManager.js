@@ -166,17 +166,25 @@ async function getAdditionalData(anleihe) {
     return anleihe;
 }
 
-async function getDollarWechselkurs(date) {
-    const currDate = new Date(date)
-    const to = format(currDate, "yyyy-MM-dd");
-    currDate.setDate(currDate.getDate() - 7);
-    const from = format(currDate, "yyyy-MM-dd");
+async function getDollarWechselkurse(fromDate, toDate = new Date(fromDate)) {
+    //Get more dates to have fallback numbers for weekends and holidays
+    fromDate.setDate(fromDate.getDate() - 7);
+    const from = format(fromDate, "yyyy-MM-dd");
+    const to = format(toDate, "yyyy-MM-dd");
 
     const url = `https://www.finanzen.net/Ajax/ExchangeRateController_HistoricPriceList/dollarkurs/${from}_${to}`
     const body = await fetchDataWithRetry(url, { method: 'POST' });
     const $ = cheerio.load(body);
+    const rows = $('tbody .table__tr');
+    const res = [];
 
-    return toNumber($('td').eq(1).text().trim());
+    rows.each((_, element) => {
+        const date = parse($(element).find('td').eq(0).text().trim(), 'dd.MM.yyyy', new Date());
+        const kurs = toNumber($(element).find('td').eq(1).text().trim());
+        res.push({ date, kurs });
+    });
+
+    return res;
 }
 
 module.exports = {
@@ -184,5 +192,5 @@ module.exports = {
     getAktuellenKurs,
     getBoersen,
     getNeueAnleihen,
-    getDollarWechselkurs
+    getDollarWechselkurse
 };

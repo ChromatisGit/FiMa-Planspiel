@@ -15,15 +15,15 @@ const today = new Date();
 //Unsere Anleihen
 
 // updateZinszahlungen({
-//     startDate: new Date(2024,3,18),
+//     startDate: new Date(2024,4,9),
 //     endDate: today
 // })
 
-// updateKurseUnsereAnleihen(today)
+updateKurseUnsereAnleihen(new Date(2024,4,15))
 
 //Neue Anleihen
 
-// getAnleihen({min_zins: 9, currency: 'USD'})
+// getAnleihen({min_zins: 6, currency: 'EUR'})
 
 // updateAnleihenData()
 
