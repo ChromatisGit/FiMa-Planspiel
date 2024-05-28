@@ -1,6 +1,6 @@
 const { readJsonFile, readJsonFromSheet, appendEntryToCSV } = require('./fileManager.js');
 const { calcLetzterZinstermin } = require('./dataTransformer.js');
-const { getBoersen } = require('./requestManager.js');
+const { getBoersen, getDollarWechselkurse } = require('./requestManager.js');
 const { removeDuplicatesFromAnleihen } = require('./removeDuplicatesFromAnleihen.js');
 const { parse } = require('date-fns');
 const fs = require('fs').promises;
@@ -30,7 +30,6 @@ async function findBestBoerse(url, date) {
 async function updateKurseFromAnleihen() {
     const inputPath = 'data/fetchedAnleihenWithData.json';
     const outputPath = 'data/neueAnleihen.csv';
-    const wechselkursePath = 'data/currentWechselkurse.json';
     const sheetPath = 'FiMa.xlsx'
 
     const investiertesKapital = 2000

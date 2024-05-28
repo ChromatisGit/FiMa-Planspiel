@@ -35,8 +35,6 @@ async function updateKurseUnsereAnleihen(date) {
         else {
             row['Aktueller Kurs'] = isSameDay(date, row['Kaufdatum'])? row['Kaufkurs'] : await getAktuellenKurs({anleihe: row, date});
             buffer.kurse[row['ISIN']] = row['Aktueller Kurs'];
-
-            console.log(buffer.kurse[row['ISIN']])
         }
 
         row['Letzte Zinszahlung'] = calcLetzterZinstermin(row['Zinszahlungen pro Jahr'], row['Letzter Zinstermin'], date);

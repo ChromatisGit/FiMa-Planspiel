@@ -13947,5 +13947,61 @@
     "land": "Guernsey",
     "faelligkeit": "31-03-2029",
     "zinstermin": "31-07-2024"
+  },
+  "XS2798884057": {
+    "name": "Telecom Italia S.p.A.",
+    "id": "XS2798884057",
+    "link": "https://www.finanzen.net/anleihen/a3lx7f-telecom-italia-spa-anleihe",
+    "waehrung": "EUR",
+    "branche": "Kommunikation & Medien",
+    "ignorieren": false,
+    "stueckelung": 1000,
+    "coupon": 0.07875,
+    "anzahlZinstermine": 2,
+    "land": "Italien",
+    "faelligkeit": "31-07-2028",
+    "zinstermin": "31-07-2024"
+  },
+  "XS2823913921": {
+    "name": "Avis Budget Finance PLC",
+    "id": "XS2823913921",
+    "link": "https://www.finanzen.net/anleihen/a3lyyx-avis-budget-finance-anleihe",
+    "waehrung": "EUR",
+    "branche": "Finanzen",
+    "ignorieren": false,
+    "stueckelung": 1000,
+    "coupon": 0.0725,
+    "anzahlZinstermine": 2,
+    "land": "Jersey",
+    "faelligkeit": "31-07-2030",
+    "zinstermin": "31-07-2024"
+  },
+  "XS2824056522": {
+    "name": "Intesa Sanpaolo S.p.A.",
+    "id": "XS2824056522",
+    "link": "https://www.finanzen.net/anleihen/a3lyyf-intesa-sanpaolo-spa-anleihe",
+    "waehrung": "EUR",
+    "branche": "Finanzen",
+    "ignorieren": false,
+    "stueckelung": 1000,
+    "coupon": 0.07,
+    "anzahlZinstermine": 2,
+    "land": "Italien",
+    "faelligkeit": "-",
+    "zinstermin": "20-11-2024"
+  },
+  "DE000A383BH3": {
+    "name": "Groß & Partner Grundstücksentwicklungsgesellschaft mbH",
+    "id": "DE000A383BH3",
+    "link": "https://www.finanzen.net/anleihen/a383bh-gross-partner-grundstuecksentwicklungsgesellschaft-mbh-anleihe",
+    "waehrung": "EUR",
+    "branche": "Immobilien",
+    "ignorieren": false,
+    "stueckelung": 1000,
+    "coupon": 0.1,
+    "anzahlZinstermine": 2,
+    "land": "Deutschland",
+    "faelligkeit": "17-05-2028",
+    "zinstermin": "17-11-2024"
   }
 }
