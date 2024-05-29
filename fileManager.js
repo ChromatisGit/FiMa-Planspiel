@@ -52,7 +52,10 @@ async function readJsonFromSheet(filePath, sheetName, startColumn, endColumn) {
         for (let i = startColumn; i <= endColumn; i++) {
             const cell = row.getCell(i);
             const header = worksheet.getRow(1).getCell(i).value;
-            if (cell.value.formula) {
+            if(!cell.value) {
+                continue;
+            }
+            if (cell.value.formula || cell.value.sharedFormula) {
                 rowData[header] = cell.value.result ?? 0;
                 continue;
             }
