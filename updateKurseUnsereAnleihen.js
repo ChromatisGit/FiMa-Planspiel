@@ -23,7 +23,7 @@ async function updateKurseUnsereAnleihen(date) {
         return row['Im Besitz']
     })
 
-    const keyNames = ['Unternehmensname', 'Branche des Hauptkonzern', 'Coupon', 'Aktueller Kurs', 'Dirty Kaufpreis', 'Kaufkurs', 'Wechselkurs am Kauftag', 'Aktueller Wechselkurs', 'Währung', 'Kaufdatum', 'Anteile', 'Stückelung', 'Letzte Zinszahlung', 'Zinszahlungen pro Jahr', 'Stückzinsen', 'Börse', 'ISIN', 'Quelle']
+    const keyNames = ['Unternehmensname', 'Branche des Hauptkonzern', 'Coupon', 'Aktueller Kurs', 'Dirty Kaufpreis', 'Kaufkurs', 'Wechselkurs am Kauftag', 'Aktueller Wechselkurs', 'Währung', 'Kaufdatum', 'Anteile', 'Stückelung', 'Letzte Zinszahlung', 'Zinszahlungen pro Jahr', 'Stückzinsen', 'Land', 'Börse', 'ISIN', 'Quelle']
 
     fs.writeFile(outputPath, keyNames.join(',')+ '\n')
 

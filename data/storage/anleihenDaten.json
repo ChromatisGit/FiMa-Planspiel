@@ -14003,5 +14003,47 @@
     "land": "Deutschland",
     "faelligkeit": "17-05-2028",
     "zinstermin": "17-11-2024"
+  },
+  "NO0013165845": {
+    "name": "Go North Group AB",
+    "id": "NO0013165845",
+    "link": "https://www.finanzen.net/anleihen/a3lvv8-go-north-group-ab-anleihe",
+    "waehrung": "USD",
+    "branche": "Finanzen",
+    "ignorieren": false,
+    "stueckelung": 1,
+    "coupon": 0.11102000000000001,
+    "anzahlZinstermine": 4,
+    "land": "Schweden",
+    "faelligkeit": "09-02-2026",
+    "zinstermin": "09-08-2024"
+  },
+  "US451102CG02": {
+    "name": "Icahn Enterprises L.P./Icahn Enterprises Finance Corp.",
+    "id": "US451102CG02",
+    "link": "https://www.finanzen.net/anleihen/a3lyzg-icahn-enterprises-icahn-enterprises-finance-anleihe",
+    "waehrung": "USD",
+    "branche": "Finanzen",
+    "ignorieren": false,
+    "stueckelung": 1000,
+    "coupon": 0.09,
+    "anzahlZinstermine": 2,
+    "land": "USA",
+    "faelligkeit": "15-06-2030",
+    "zinstermin": "15-06-2024"
+  },
+  "XS2818827169": {
+    "name": "Trident Energy Finance PLC",
+    "id": "XS2818827169",
+    "link": "https://www.finanzen.net/anleihen/a3lyxt-trident-energy-finance-anleihe",
+    "waehrung": "USD",
+    "branche": "Energie",
+    "ignorieren": false,
+    "stueckelung": 1000,
+    "coupon": 0.125,
+    "anzahlZinstermine": 1,
+    "land": "GB",
+    "faelligkeit": "30-11-2029",
+    "zinstermin": "30-11-2024"
   }
 }
