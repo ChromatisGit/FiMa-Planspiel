@@ -4,6 +4,7 @@ const { getBoersen, getDollarWechselkurse } = require('./requestManager.js');
 const { removeDuplicatesFromAnleihen } = require('./removeDuplicatesFromAnleihen.js');
 const { parse } = require('date-fns');
 const fs = require('fs').promises;
+const MIN_KURS = 20
 
 async function findBestBoerse(url, date) {
     let boersenKurse;
@@ -47,17 +48,26 @@ async function updateKurseFromAnleihen() {
         return row['Im Besitz']
     })
 
-    const columnNames = ['Kaufdatum', 'Unternehmensname', 'Branche des Hauptkonzern', 'Anteile', 'Stückelung', 'Kaufkurs', 'Coupon', 'Wechselkurs am Kauftag', 'Währung', 'Zinszahlungen pro Jahr', 'Letzter Zinstermin', 'Land', 'Börse', 'ISIN', 'Quelle', 'Kaufbar', 'Bereits Gekauft']
-    const keyNames = ['kaufdatum', 'name', 'branche', 'anteile', 'stueckelung', 'kurs', 'coupon', 'wechselkurs', 'waehrung', 'anzahlZinstermine', 'zinstermin', 'land', 'boerse', 'id', 'link', 'kaufbar', 'bereitsGekauft']
+    const columnNames = ['Kaufdatum', 'Unternehmensname', 'Branche des Hauptkonzern', 'Anteile', 'Stückelung', 'Kaufkurs', 'Coupon', 'Wechselkurs am Kauftag', 'Währung', 'Zinszahlungen pro Jahr', 'Letzter Zinstermin', 'Land', 'Börse', 'ISIN', 'Quelle', 'Kaufbar']
+    const keyNames = ['kaufdatum', 'name', 'branche', 'anteile', 'stueckelung', 'kurs', 'coupon', 'wechselkurs', 'waehrung', 'anzahlZinstermine', 'zinstermin', 'land', 'boerse', 'id', 'link', 'kaufbar']
     fs.writeFile(outputPath, columnNames.join(',') + '\n')
 
     let processedCount = 1;
 
     for (const anleihe of input) {
+        const gekaufteAnleihe = currentAnleihen.find(a => a.Unternehmensname === anleihe.name)
+        if (gekaufteAnleihe !== undefined) {
+            continue;
+        }
+
         const { kurs, boerse } = await findBestBoerse(anleihe.link, today)
 
         if (boerse === undefined) {
             console.log(`Derzeit keine aktiven Trades für ${anleihe.name} (${anleihe.link})`)
+            continue;
+        }
+
+        if (kurs <= MIN_KURS) {
             continue;
         }
 
@@ -69,22 +79,9 @@ async function updateKurseFromAnleihen() {
         anleihe.anteile = Math.ceil(investiertesKapital / anleihe.stueckelung)
         anleihe.wechselkurs = wechselkurse[anleihe.waehrung];
 
-        const gekaufteAnleihe = currentAnleihen.find(a => a.Unternehmensname === anleihe.name)
-
-
-        if (gekaufteAnleihe === undefined) {
-            console.log(`Neue Anleihe gefunden. ${processedCount}`);
-            processedCount++;
-            appendEntryToCSV(outputPath, anleihe, keyNames)
-            continue;
-        }
-
-        if (gekaufteAnleihe['Börse'] !== anleihe.boerse) {
-            anleihe.bereitsGekauft = true;
-            console.log(`Bessere Börse für Anleihe gefunden. ${processedCount}`);
-            processedCount++;
-            continue;
-        }
+        console.log(`Neue Anleihe gefunden. ${processedCount}`);
+        processedCount++;
+        appendEntryToCSV(outputPath, anleihe, keyNames);
     }
 
     removeDuplicatesFromAnleihen();

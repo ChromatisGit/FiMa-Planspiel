@@ -14045,5 +14045,19 @@
     "land": "GB",
     "faelligkeit": "30-11-2029",
     "zinstermin": "30-11-2024"
+  },
+  "NO0013243766": {
+    "name": "DNO ASA",
+    "id": "NO0013243766",
+    "link": "https://www.finanzen.net/anleihen/a3lzme-dno-asa-anleihe",
+    "waehrung": "USD",
+    "branche": "Energie",
+    "ignorieren": false,
+    "stueckelung": 1000,
+    "coupon": 0.0925,
+    "anzahlZinstermine": 4,
+    "land": "Norwegen",
+    "faelligkeit": "04-06-2029",
+    "zinstermin": "04-09-2024"
   }
 }
