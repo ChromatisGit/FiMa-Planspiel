@@ -5,3 +5,4 @@ node_modules/
 !anleihenDaten.json
 *.xlsx
 *.txt
+build/

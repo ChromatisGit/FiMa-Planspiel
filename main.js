@@ -11,7 +11,7 @@ const today = new Date();
 //Unsere Anleihen
 
 // updateZinszahlungen({
-//     startDate: new Date(2024,4,9),
+//     startDate: new Date(2024,5,6),
 //     endDate: today
 // })
 
@@ -19,7 +19,7 @@ updateKurseUnsereAnleihen(today)
 
 //Neue Anleihen
 
-// getAnleihen({min_zins: 6, currency: 'EUR'})
+// getAnleihen({min_zins: 9, currency: 'USD'})
 
 // updateAnleihenData()
 

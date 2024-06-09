@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
 const { parse } = require('date-fns');
-const path = require('path');
 const { convertJSONtoCSV, readJsonFile } = require('./fileManager.js');
 const { getAdditionalData } = require('./requestManager.js');
 
@@ -66,11 +65,11 @@ async function updateStorage({ input, storage, branchenPath, missingBranchenPath
 }
 
 async function updateAnleihenData() {
-    const inputPath = path.join(__dirname, 'data/fetchedAnleihen.json');
-    const outputPath = path.join(__dirname, 'data/fetchedAnleihenWithData.json');
-    const storagePath = path.join(__dirname, 'data/storage/anleihenDaten.json');
-    const branchenPath = path.join(__dirname, 'data/storage/branchen.json');
-    const missingBranchenPath = path.join(__dirname, 'branchenlos.csv');
+    const inputPath = 'generated/fetchedAnleihen.json';
+    const outputPath = 'generated/fetchedAnleihenWithData.json';
+    const storagePath = 'storage/anleihenDaten.json';
+    const branchenPath = 'storage/branchen.json';
+    const missingBranchenPath = 'branchen.csv';
 
     const [input, storage] = await Promise.all([
         readJsonFile(inputPath),

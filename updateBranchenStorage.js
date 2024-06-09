@@ -2,7 +2,7 @@ const fs = require('fs');
 const csv = require('csv-parser');
 
 function updateBranchenStorage() {
-    let branchen = JSON.parse(fs.readFileSync('data/storage/branchen.json', 'utf8'));
+    let branchen = JSON.parse(fs.readFileSync('storage/branchen.json', 'utf8'));
     let newEntriesAmount = 0
 
     fs.createReadStream('branchen.csv')
@@ -16,7 +16,7 @@ function updateBranchenStorage() {
             }
         })
         .on('end', () => {
-            fs.writeFileSync('data/storage/branchen.json', JSON.stringify(branchen, null, 4))
+            fs.writeFileSync('storage/branchen.json', JSON.stringify(branchen, null, 4))
             console.log(`Added ${newEntriesAmount} to branchen.json!`);
         });
 }

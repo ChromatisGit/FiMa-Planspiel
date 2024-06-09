@@ -16,7 +16,7 @@ function couponRendite(e, date) {
 function removeDuplicatesFromAnleihen() {
     const today = new Date();
     const records = {};
-    const path = 'data/neueAnleihen.csv'
+    const path = 'generated/neueAnleihen.csv'
 
     fs.createReadStream(path)
         .pipe(csv({ delimiter: ',' }))

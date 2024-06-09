@@ -5,8 +5,8 @@ const { calcLetzterZinstermin } = require('./dataTransformer.js');
 const { getAktuellenKurs, getDollarWechselkurse } = require('./requestManager.js');
 
 async function updateKurseUnsereAnleihen(date) {
-    const outputPath = 'data/unsereAnleihen.csv';
-    const bufferPath = 'data/kurseAnleihenBuffer.json';
+    const outputPath = 'generated/unsereAnleihen.csv';
+    const bufferPath = 'generated/kurseAnleihenBuffer.json';
 
     let buffer = await readJsonFile(bufferPath);
     if(!buffer || !isSameDay(new Date(buffer.date), date)) {

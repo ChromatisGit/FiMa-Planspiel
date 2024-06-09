@@ -29,8 +29,8 @@ async function findBestBoerse(url, date) {
 }
 
 async function updateKurseFromAnleihen() {
-    const inputPath = 'data/fetchedAnleihenWithData.json';
-    const outputPath = 'data/neueAnleihen.csv';
+    const inputPath = 'generated/fetchedAnleihenWithData.json';
+    const outputPath = 'generated/neueAnleihen.csv';
     const sheetPath = 'FiMa.xlsx'
 
     const investiertesKapital = 2000

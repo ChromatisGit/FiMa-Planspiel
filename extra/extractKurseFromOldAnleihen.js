@@ -5,18 +5,17 @@ const { updateKurseUnsereAnleihen } = require('./updateKurseUnsereAnleihen.js');
 
 
 async function extractKurseFromOldFiles({dollar,date,filename}) {
+    const bufferPath = 'generated/kurseAnleihenBuffer.json';
+    const sheetPath = `${filename}.xlsx`
 
     parsedDate = parse(date, 'yyyy-MM-dd', new Date())
-
-    const bufferPath = 'data/kurseAnleihenBuffer.json';
 
     buffer = {
             date: date,
             usd: dollar,
             kurse: {}
-        }
+    }
 
-    const sheetPath = `${filename}.xlsx`
     let anleihen = await readJsonFromSheet(sheetPath, 'Aktuelle Anleihen', 1, 25)
     anleihen.forEach((entry) => {
         buffer.kurse[entry.ISIN] = entry['Aktueller Kurs']
