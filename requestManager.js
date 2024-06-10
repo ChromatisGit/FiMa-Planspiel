@@ -50,7 +50,7 @@ async function getAktuellenKurs({anleihe, date}) {
     const id = anleihe['Quelle'].slice(prefixLength, -suffixLength);
     const code = BoersenCodeMap[anleihe['Börse']];
     const to = format(currDate, "yyyy-MM-dd");
-    currDate.setDate(currDate.getDate() - 7);
+    currDate.setDate(currDate.getDate() - 30);
     const from = format(currDate, "yyyy-MM-dd");
     const url = `https://www.finanzen.net/Ajax/BondController_HistoricPriceList/${id}/${code}/${from}_${to}`;
 

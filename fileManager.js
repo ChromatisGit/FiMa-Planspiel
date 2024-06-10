@@ -9,7 +9,7 @@ function convertJSONtoCSV(table, keys) {
         .join(',');
     });
 
-    const csv = [keys.join(','), ...csvRows].join('\n');
+    const csv = [keys.join(','), ...csvRows].join('\n') + '\n';
     return csv;
 }
 

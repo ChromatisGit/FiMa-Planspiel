@@ -25,7 +25,7 @@ async function validateInput({
 }) {
     while (true) {
         const input = await userInput(inputMsg)
-        const validatedInput = validator(input)
+        const validatedInput = await validator(input)
         if (validatedInput !== undefined) {
             return validatedInput
         }
@@ -104,7 +104,7 @@ async function selectZinszahlungen() {
         inputMsg: '\nEnddatum: ',
         failedMsg: 'Bitte gebe ein valides Datum im Format dd-mm-yyyy ein!',
         validator: (input) => {
-            if(input === '' && zinszahlungenExists) {
+            if(input === '') {
                 console.log(format(new Date(), "dd-MM-yyyy"))
                 return new Date();
             }

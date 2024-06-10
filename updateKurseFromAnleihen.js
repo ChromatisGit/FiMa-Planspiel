@@ -82,6 +82,7 @@ async function updateKurseFromAnleihen() {
         anleihe.wechselkurs = wechselkurse[anleihe.waehrung];
 
         appendEntryToCSV(outputPath, anleihe, keyNames);
+        successfulAnleihenCount++;
     }
 
     console.log(`\n${successfulAnleihenCount} neue Anleihen gefunden!`)

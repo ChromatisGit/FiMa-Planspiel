@@ -46,6 +46,8 @@ async function updateZinszahlungen({startDatum, endDatum}) {
     for(row of newZinszahlungen) {
         await appendEntryToCSV(outputPath, row, keyNames);
     }
+
+    console.log('Zinszahlungen erfolgreich aktualisiert!')
 }
 
 module.exports = {
