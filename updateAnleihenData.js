@@ -70,7 +70,7 @@ async function updateAnleihenData() {
     const missingBranchenPath = 'branchen.csv';
 
     if(fs.existsSync(missingBranchenPath)) {
-        const branchen = readJsonFile(branchenPath);
+        const branchen = await readJsonFile(branchenPath);
 
         await new Promise((resolve, reject) => {
             fs.createReadStream(missingBranchenPath)

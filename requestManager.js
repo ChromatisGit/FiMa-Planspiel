@@ -144,7 +144,6 @@ async function getAdditionalData(anleihe) {
     anleihe.ignorieren = false
     if (body.includes('Die Anleihe ist nicht mehr aktiv.')) {
         anleihe.ignorieren = true
-        console.error(`${anleihe.name} (${anleihe.link}) is inactive, ignoring!`);
         return anleihe;
     }
 
@@ -158,7 +157,6 @@ async function getAdditionalData(anleihe) {
         anleihe.zinstermin = findAttribute($, "nächster Zinstermin").replaceAll('.', '-');
     } catch (error) {
         anleihe.ignorieren = true;
-        console.error(`Couldn't process ${anleihe.name} (${anleihe.link}), ignoring!\n${error}`);
     }
 
     return anleihe;
