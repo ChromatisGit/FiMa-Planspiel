@@ -1,4 +1,5 @@
-const fs = require('fs').promises;
+const fs = require('fs');
+const csv = require('csv-parser');
 const { parse } = require('date-fns');
 const { convertJSONtoCSV, readJsonFile } = require('./fileManager.js');
 const { getAdditionalData } = require('./requestManager.js');
@@ -9,12 +10,14 @@ async function updateStorage({ input, storage, branchenPath, missingBranchenPath
     const missingBranchen = [];
     const branchen = await readJsonFile(branchenPath)
     let updatedStorage = false;
-    let entryCount = 0;
 
+    let processedAnleihenCount = 1;
+    const totalAnleihenCount = input.length
     for (let anleihe of input) {
-        entryCount++;
+        console.clear();
+        console.log(`Fortschritt: ${processedAnleihenCount++}/${totalAnleihenCount}`);
+
         if (storage.hasOwnProperty(anleihe.id)) {
-            console.log(`${entryCount} is in storage!`)
             continue;
         }
 
@@ -22,7 +25,6 @@ async function updateStorage({ input, storage, branchenPath, missingBranchenPath
             if (!missingBranchen.some((a) => a.name === anleihe.name)) {
                 missingBranchen.push(anleihe)
             }
-            console.log(`${entryCount} is missing it's branche!`)
             continue;
         }
 
@@ -31,7 +33,6 @@ async function updateStorage({ input, storage, branchenPath, missingBranchenPath
             anleihe.ignorieren = true
             storage[anleihe.id] = anleihe;
             updatedStorage = true;
-            console.log(`${entryCount} has been added to storage!`)
             continue;
         }
 
@@ -44,24 +45,21 @@ async function updateStorage({ input, storage, branchenPath, missingBranchenPath
             anleihe.ignorieren = true
             storage[anleihe.id] = anleihe;
             updatedStorage = true;
-            console.log(`${entryCount} has been added to storage!`)
             continue;
         }
 
         storage[anleihe.id] = anleihe;
         updatedStorage = true;
-        console.log(`${entryCount} has been added to storage!`)
     }
 
     if(updatedStorage) {
-        console.log(storagePath)
-        fs.writeFile(storagePath, JSON.stringify(storage, null, 2));
+        fs.promises.writeFile(storagePath, JSON.stringify(storage, null, 2));
     }
 
     if (missingBranchen.length > 0) {
-        fs.writeFile(missingBranchenPath, convertJSONtoCSV(missingBranchen, ['name', 'link']))
-        console.log(`${missingBranchen.length} Anleihen ohne Branche gefunden!`)
+        fs.promises.writeFile(missingBranchenPath, convertJSONtoCSV(missingBranchen, ['name', 'link', 'branche']))
     }
+    return missingBranchen.length;
 }
 
 async function updateAnleihenData() {
@@ -71,19 +69,42 @@ async function updateAnleihenData() {
     const branchenPath = 'storage/branchen.json';
     const missingBranchenPath = 'branchen.csv';
 
+    if(fs.existsSync(missingBranchenPath)) {
+        const branchen = readJsonFile(branchenPath);
+
+        await new Promise((resolve, reject) => {
+            fs.createReadStream(missingBranchenPath)
+                .pipe(csv())
+                .on('data', (row) => {
+                    if (row.name && row.branche) {
+                        if (!branchen[row.name]) {
+                            branchen[row.name] = row.branche;
+                        }
+                    }
+                })
+                .on('end', resolve)
+                .on('error', reject);
+        });
+
+        await fs.promises.writeFile(branchenPath, JSON.stringify(branchen, null, 4));
+        await fs.promises.unlink(missingBranchenPath);
+    }
+
     const [input, storage] = await Promise.all([
         readJsonFile(inputPath),
         readJsonFile(storagePath)
     ]);
 
-    await updateStorage({ input, storage, branchenPath, missingBranchenPath, storagePath });
+    const brachenlos = await updateStorage({ input, storage, branchenPath, missingBranchenPath, storagePath });
 
     const output = input
         .map(anleihe => storage[anleihe.id])
         .filter(anleihe => anleihe)
         .filter(anleihe => !anleihe.ignorieren);
 
-    fs.writeFile(outputPath, JSON.stringify(output, undefined, 2));
+    fs.promises.writeFile(outputPath, JSON.stringify(output, undefined, 2));
+
+    return brachenlos;
 }
 
 module.exports = {

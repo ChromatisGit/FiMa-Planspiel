@@ -27,22 +27,37 @@ async function updateKurseUnsereAnleihen(date) {
 
     fs.writeFile(outputPath, keyNames.join(',')+ '\n')
 
-    let processedCount = 1;
+    let processedAnleihenCount = 1;
+    const totalAnleihenCount = table.length
+    const failedAnleihen = [];
     for (const row of table) {
-        if(buffer.kurse[row['ISIN']]) {
+        if (buffer.kurse[row['ISIN']]) {
             row['Aktueller Kurs'] = buffer.kurse[row['ISIN']];
-        }
-        else {
-            row['Aktueller Kurs'] = isSameDay(date, row['Kaufdatum'])? row['Kaufkurs'] : await getAktuellenKurs({anleihe: row, date});
+        } else if (isSameDay(date, row['Kaufdatum'])) {
+            row['Aktueller Kurs'] = row['Kaufkurs'];
+        } else {
+            const fetchedKurs = await getAktuellenKurs({ anleihe: row, date });
+            if (fetchedKurs.kurs !== undefined) {
+                row['Aktueller Kurs'] = fetchedKurs.kurs;
+            } else {
+                failedAnleihen.push(fetchedKurs.message);
+                row['Aktueller Kurs'] = null;
+            }
             buffer.kurse[row['ISIN']] = row['Aktueller Kurs'];
         }
 
         row['Letzte Zinszahlung'] = calcLetzterZinstermin(row['Zinszahlungen pro Jahr'], row['Letzter Zinstermin'], date);
         row['Aktueller Wechselkurs'] = row['Währung'] === 'EUR' ? 1 : buffer.usd;
 
-        appendEntryToCSV(outputPath, row, keyNames)
+        appendEntryToCSV(outputPath, row, keyNames);
 
-        console.log(`Processed entry ${processedCount++}`);
+        console.clear();
+        console.log(`Fortschritt: ${processedAnleihenCount++}/${totalAnleihenCount}`);
+    }
+
+    if (failedAnleihen.length !== 0) {
+        console.log(`\n${failedAnleihen.length} fehlende Kurse`)
+        failedAnleihen.forEach((msg) => console.log(msg))
     }
 
     fs.writeFile(bufferPath, JSON.stringify(buffer, null, 2))

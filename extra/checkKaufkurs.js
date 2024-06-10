@@ -12,7 +12,7 @@ async function checkKaufkurse() {
     fs.writeFile(outputPath, keyNames.join(',')+ '\n')
 
     for (const row of table) {
-        row['Tagesendkurs'] = await getAktuellenKurs({anleihe: row, date: row['Kaufdatum']});
+        row['Tagesendkurs'] = (await getAktuellenKurs({anleihe: row, date: row['Kaufdatum']})).kurs;
         appendEntryToCSV(outputPath, row, keyNames);
     }
 }

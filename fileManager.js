@@ -30,7 +30,6 @@ async function readJsonFile(filePath) {
         const data = await fs.readFile(filePath, 'utf8');
         return JSON.parse(data);
     } catch (error) {
-        console.error(`File not found: ${filePath}. Creating file...`);
         fs.writeFile(filePath, '{}');
         return undefined;
     }

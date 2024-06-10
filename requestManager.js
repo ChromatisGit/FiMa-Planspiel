@@ -50,7 +50,7 @@ async function getAktuellenKurs({anleihe, date}) {
     const id = anleihe['Quelle'].slice(prefixLength, -suffixLength);
     const code = BoersenCodeMap[anleihe['Börse']];
     const to = format(currDate, "yyyy-MM-dd");
-    currDate.setDate(currDate.getDate() - 30);
+    currDate.setDate(currDate.getDate() - 7);
     const from = format(currDate, "yyyy-MM-dd");
     const url = `https://www.finanzen.net/Ajax/BondController_HistoricPriceList/${id}/${code}/${from}_${to}`;
 
@@ -59,13 +59,10 @@ async function getAktuellenKurs({anleihe, date}) {
     const $ = cheerio.load(body);
 
     if ($('p').first().text() === 'Keine Daten verfügbar') {
-        console.log(`Couldn't find any data for ${anleihe['Unternehmensname']} for ${anleihe['Börse']}.`);
-        console.log(url);
-        console.log($.html());
-        return null;
+        return {message: `Keine Daten für ${anleihe['Unternehmensname']} an der Börse ${anleihe['Börse']} gefunden.`};
     }
 
-    return toNumber($('td').eq(2).text().trim()) / 100;
+    return {kurs: toNumber($('td').eq(2).text().trim()) / 100};
 }
 
 async function getBoersen(link) {
@@ -89,7 +86,7 @@ async function getBoersen(link) {
 }
 
 async function getNeueAnleihen({min_zins, currency}) {
-    const url = `https://www.finanzen.net/anleihen/suche?anwi=&abti=&aw=${currency}%2C&arendv=&arendb=&arlv=&arlb=&arlfv=&arlfb=&absti=&aemvv=&aemvb=&aei=&al=&alion=&anr=a&arv=&arb=&arak=a&arad=a&aboe=al&anmk=j&astkv=&astkb=5000&aakv=&aakb=&aums=&aspd=&anem=n&akv=${min_zins}&akb=&akt=&aszv=&aszb=&azfv=&azfb=&adv=&adb=&amdv=&amdb=&s=1&pkSortT=8&pkSortR=2`
+    const url = `https://www.finanzen.net/anleihen/suche?anwi=&abti=&aw=${currency}%2C&arendv=&arendb=&arlv=&arlb=&arlfv=&arlfb=&absti=&aemvv=&aemvb=&aei=&al=&alion=&anr=a&arv=&arb=&arak=a&arad=a&aboe=al&anmk=j&astkv=&astkb=3000&aakv=&aakb=&aums=&aspd=&anem=n&akv=${min_zins}&akb=&akt=&aszv=&aszb=&azfv=&azfb=&adv=&adb=&amdv=&amdb=&s=1&pkSortT=8&pkSortR=2`
     const anleihen = []
     let page = 1;
 
@@ -97,7 +94,8 @@ async function getNeueAnleihen({min_zins, currency}) {
         const response = await fetch(`${url}&p=${page}`);
         const body = await response.text();
         const $ = cheerio.load(body);
-        console.log(`Loaded Page ${page}`);
+        console.clear();
+        console.log(`Seite ${page} geladen!`);
 
         const tableRows = $('main > section > article > div > table > tbody > tr');
 

@@ -16,7 +16,7 @@ async function findBestBoerse(url, date) {
     }
 
     const datumLimit = new Date(date)
-    datumLimit.setDate(datumLimit.getDate() - 3)
+    datumLimit.setDate(datumLimit.getDate() - 7)
 
     const bestBoerse = boersenKurse
         .filter(e => e.aufrufDatum >= datumLimit)
@@ -52,9 +52,12 @@ async function updateKurseFromAnleihen() {
     const keyNames = ['kaufdatum', 'name', 'branche', 'anteile', 'stueckelung', 'kurs', 'coupon', 'wechselkurs', 'waehrung', 'anzahlZinstermine', 'zinstermin', 'land', 'boerse', 'id', 'link', 'kaufbar']
     fs.writeFile(outputPath, columnNames.join(',') + '\n')
 
-    let processedCount = 1;
-
+    let processedAnleihenCount = 1;
+    let successfulAnleihenCount = 0;
+    const totalAnleihenCount = input.length
     for (const anleihe of input) {
+        console.clear();
+        console.log(`Fortschritt: ${processedAnleihenCount++}/${totalAnleihenCount}`);
         const gekaufteAnleihe = currentAnleihen.find(a => a.Unternehmensname === anleihe.name)
         if (gekaufteAnleihe !== undefined) {
             continue;
@@ -63,7 +66,6 @@ async function updateKurseFromAnleihen() {
         const { kurs, boerse } = await findBestBoerse(anleihe.link, today)
 
         if (boerse === undefined) {
-            console.log(`Derzeit keine aktiven Trades für ${anleihe.name} (${anleihe.link})`)
             continue;
         }
 
@@ -79,10 +81,10 @@ async function updateKurseFromAnleihen() {
         anleihe.anteile = Math.ceil(investiertesKapital / anleihe.stueckelung)
         anleihe.wechselkurs = wechselkurse[anleihe.waehrung];
 
-        console.log(`Neue Anleihe gefunden. ${processedCount}`);
-        processedCount++;
         appendEntryToCSV(outputPath, anleihe, keyNames);
     }
+
+    console.log(`\n${successfulAnleihenCount} neue Anleihen gefunden!`)
 
     removeDuplicatesFromAnleihen();
 }

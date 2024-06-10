@@ -2,7 +2,6 @@ const { updateZinszahlungen } = require('./updateZinszahlungen.js');
 const { updateKurseUnsereAnleihen } = require('./updateKurseUnsereAnleihen.js');
 const { getAnleihen } = require('./getAnleihen.js');
 const { updateAnleihenData } = require('./updateAnleihenData.js');
-const { updateBranchenStorage } = require('./updateBranchenStorage.js');
 const { updateKurseFromAnleihen } = require('./updateKurseFromAnleihen.js');
 
 
@@ -15,14 +14,12 @@ const today = new Date();
 //     endDate: today
 // })
 
-updateKurseUnsereAnleihen(today)
+// updateKurseUnsereAnleihen(today)
 
 //Neue Anleihen
 
-// getAnleihen({min_zins: 9, currency: 'USD'})
+// getAnleihen({min_zins: 10, currency: 'USD'})
 
 // updateAnleihenData()
-
-// updateBranchenStorage()
 
 // updateKurseFromAnleihen()

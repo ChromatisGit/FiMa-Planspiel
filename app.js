@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 const csv = require('csv-parser');
 const { parse, format, isValid } = require('date-fns');
 const { setupFiles } = require('./setupFiles.js');
@@ -7,7 +6,6 @@ const { updateZinszahlungen } = require('./updateZinszahlungen.js');
 const { updateKurseUnsereAnleihen } = require('./updateKurseUnsereAnleihen.js');
 const { getAnleihen } = require('./getAnleihen.js');
 const { updateAnleihenData } = require('./updateAnleihenData.js');
-const { updateBranchenStorage } = require('./updateBranchenStorage.js');
 const { updateKurseFromAnleihen } = require('./updateKurseFromAnleihen.js');
 
 
@@ -142,11 +140,109 @@ async function getLastZinszahlung(csvFilePath) {
 }
 
 async function selectVerkaufskurse() {
+    console.log(
+        `Gib an, von welchen Tag die Kurse gefetcht werden sollen.
+        (Falls kein Datum angegeben wird, wird heute angenommen.)`)
 
+    const datum = await validateInput({
+        inputMsg: 'Datum (dd-MM-yyyy): ',
+        failedMsg: 'Bitte gebe ein valides Datum im Format dd-mm-yyyy ein!',
+        validator: (input) => {
+            if(input === '') {
+                console.log(format(new Date(), "dd-MM-yyyy"))
+                return new Date();
+            }
+            const parsedDate = parse(input, 'dd-MM-yyyy', new Date());
+            if (isValid(parsedDate)) {
+                return parsedDate
+            }
+            return undefined;
+        }
+    })
+
+    await updateKurseUnsereAnleihen(datum)
 }
 
 async function selectNeueAnleihen() {
 
+    const min_zins = await validateInput({
+        inputMsg: 'Wie hoch ist der Mindestcoupon (in %): ',
+        failedMsg: 'Bitte gebe eine natürliche Zahl ein!',
+        validator: (input) => {
+            if (input.endsWith('%')) {
+                input = input.slice(0, -1);
+            }
+            const num = Number(input);
+            if(Number.isInteger(num) && num > 0 && input !== '') {
+                return num;
+            }
+            return undefined;
+        }
+    })
+
+    console.log('In welcher Währung soll die Anleihe emittiert sein (aktuell werden nur EUR und USD unterstützt):')
+
+    const currency = await validateInput({
+        inputMsg: '',
+        failedMsg: "Nur 'USD' und 'EUR' werden unterstützt!",
+        validator: (input) => {
+            if(input !== 'USD' && input !== 'EUR') {
+                return undefined;
+            }
+            return input;
+        }
+    })
+
+    await getAnleihen({min_zins, currency})
+
+    console.log('Alle ISIN der Anleihen abgerufen. Fetche detailliertere Daten...')
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    while(true) {
+        const branchenlos = await updateAnleihenData()
+
+        if(branchenlos === 0) {
+            break;
+        }
+        console.log(`\n${branchenlos} Anleihen ohne Branche gefunden!`)
+
+        const command = await fehlendeBranche();
+        if (command === '1') {
+            continue;
+        }
+        if (command === '2') {
+            break;
+        }
+        if (command === '3') {
+            return;
+        }
+    }
+
+    console.log('Alle detaillierten Anleihen abgerufen. Fetche Kursdaten...')
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    await updateKurseFromAnleihen();
+}
+
+async function fehlendeBranche() {
+    while (true) {
+        console.log(`Füge die Branchen der branchen.csv hinzu!
+
+            1 : Die fehlenden Branchen wurden hinzugefügt
+            2 : Ignoriere alle Anleihen ohne Branche
+            3 : Abbrechen`);
+
+            const command = await userInput()
+            console.clear();
+            switch (command) {
+                case '1':
+                case '2':
+                case '3':
+                    return command;
+                default:
+                    console.log(`Unbekannter Befehl ${command}! Bitte tippe eine der folgenden Zahlen ein!\n`)
+            }
+    }
 }
 
 main()
