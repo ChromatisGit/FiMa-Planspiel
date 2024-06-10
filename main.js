@@ -9,10 +9,10 @@ const today = new Date();
 
 //Unsere Anleihen
 
-// updateZinszahlungen({
-//     startDate: new Date(2024,5,6),
-//     endDate: today
-// })
+updateZinszahlungen({
+    startDatum: new Date(2024,5,6),
+    endDatum: today
+})
 
 // updateKurseUnsereAnleihen(today)
 

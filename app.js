@@ -74,7 +74,7 @@ async function main() {
 }
 
 async function selectZinszahlungen() {
-    const zinszahlungenPath = 'storage/zinszahlungen.csv';
+    const zinszahlungenPath = 'generated/zinszahlungen.csv';
     const zinszahlungenExists = fs.existsSync(zinszahlungenPath);
 
     console.log('Gebe den Zeitraum an, von wann bis wann Zinszahlungen hinzugefügt werden sollen.')
