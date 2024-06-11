@@ -3,6 +3,7 @@ node_modules/
 *.csv
 !branchen.json
 !anleihenDaten.json
+!package.json
 *.xlsx
 *.txt
 build/

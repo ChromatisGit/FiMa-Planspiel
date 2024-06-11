@@ -1,0 +1,11 @@
+{
+    "name": "heartbroker",
+    "version": "1.0.0",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "@angablue/exe": "^2.1.3"
+    }
+}
